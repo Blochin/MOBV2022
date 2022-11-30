@@ -13,4 +13,26 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="Title">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="SubTitle">
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    
+    <style name="TextInputLayout" parent="ThemeOverlay.Material3.AutoCompleteTextView.FilledBox">
+        <item name="android:textColorHint">@color/gray</item>
+        <item name="android:textColor">@color/primary_color</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeWidthFocused">0dp</item>
+    </style>
+
+    <style name="TextInputEditText" parent="ThemeOverlay.Material3.AutoCompleteTextView.FilledBox">
+        <item name="android:background">@drawable/bg_text_field</item>
+    </style>
 </resources>

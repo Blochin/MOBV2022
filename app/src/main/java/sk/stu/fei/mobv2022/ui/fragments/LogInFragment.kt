@@ -5,13 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import sk.stu.fei.mobv2022.databinding.FragmentSignUpBinding
-import sk.stu.fei.mobv2022.ui.viewmodels.SignUpViewModel
+import sk.stu.fei.mobv2022.databinding.FragmentLogInBinding
+import sk.stu.fei.mobv2022.ui.viewmodels.LogInViewModel
 
-class SignUpFragment : Fragment() {
+class LogInFragment : Fragment() {
 
-    private lateinit var binding: FragmentSignUpBinding
-    private lateinit var viewModel: SignUpViewModel
+    private lateinit var binding: FragmentLogInBinding
+    private lateinit var viewModel: LogInViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,7 +21,7 @@ class SignUpFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentSignUpBinding.inflate(inflater, container, false)
+        binding = FragmentLogInBinding.inflate(inflater, container, false)
         return binding.root
     }
 

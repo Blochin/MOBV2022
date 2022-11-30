@@ -1,5 +1,16 @@
 <resources>
     <string name="app_name">MOBV2022</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login_title">Login to app</string>
+    <string name="sign_up_title">Sign Up</string>
+    <string name="login_subtitle">
+        <font color="#00C9B8"><b>Login</b></font> if you already have an account.
+    </string>
+    <string name="sign_up_subtitle">
+        <font color="#00C9B8"><b>Sign Up</b></font> if you not registered yet.
+    </string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="login">Login</string>
 </resources>
