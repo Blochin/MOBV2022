@@ -16,6 +16,7 @@
     <string name="password_valid">Password must match witch confirm password and greater than 6 characters</string>
     <string name="password_valid_login">Password is required, must be greater than 6</string>
     <string name="username_valid">Username is required</string>
+    <string name="user_not_exist">User does not exist</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

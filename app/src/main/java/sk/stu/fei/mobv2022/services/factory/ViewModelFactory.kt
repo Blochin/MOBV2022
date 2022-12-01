@@ -3,6 +3,7 @@ package sk.stu.fei.mobv2022.services.factory
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import sk.stu.fei.mobv2022.data.repository.DataRepository
+import sk.stu.fei.mobv2022.ui.viewmodels.BarListViewModel
 import sk.stu.fei.mobv2022.ui.viewmodels.LogInViewModel
 import sk.stu.fei.mobv2022.ui.viewmodels.SignUpViewModel
 
@@ -17,6 +18,11 @@ class ViewModelFactory(private val repository: DataRepository) : ViewModelProvid
         if (modelClass.isAssignableFrom(LogInViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
             return LogInViewModel(repository) as T
+        }
+
+        if (modelClass.isAssignableFrom(BarListViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return BarListViewModel(repository) as T
         }
 
         throw IllegalArgumentException("Unknown ViewModel class")

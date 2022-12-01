@@ -1,11 +1,13 @@
 package sk.stu.fei.mobv2022.data.repository
 
 import android.annotation.SuppressLint
+import androidx.lifecycle.LiveData
 import sk.stu.fei.mobv2022.data.api.RestApi
 import sk.stu.fei.mobv2022.data.api.UserCreateRequest
 import sk.stu.fei.mobv2022.data.api.UserLoginRequest
 import sk.stu.fei.mobv2022.data.api.UserResponse
 import sk.stu.fei.mobv2022.data.database.LocalCache
+import sk.stu.fei.mobv2022.data.database.model.BarItem
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -77,6 +79,43 @@ class DataRepository private constructor(
             onError("Login in failed, error.")
             onStatus(null)
         }
+    }
+
+    suspend fun apiBarList(
+        onError: (error: String) -> Unit
+    ) {
+        try {
+            val resp = service.barList()
+            if (resp.isSuccessful) {
+                resp.body()?.let { bars ->
+
+                    val b = bars.map {
+                        BarItem(
+                            it.bar_id,
+                            it.bar_name,
+                            it.bar_type,
+                            it.lat,
+                            it.lon,
+                            it.users
+                        )
+                    }
+                    cache.deleteBars()
+                    cache.insertBars(b)
+                } ?: onError("Failed to load bars")
+            } else {
+                onError("Failed to read bars")
+            }
+        } catch (ex: IOException) {
+            ex.printStackTrace()
+            onError("Failed to load bars, check internet connection")
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            onError("Failed to load bars, error.")
+        }
+    }
+
+    fun dbBars() : LiveData<List<BarItem>?> {
+        return cache.getBars()
     }
 
     companion object{

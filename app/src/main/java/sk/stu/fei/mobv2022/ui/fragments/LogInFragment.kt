@@ -48,11 +48,17 @@ class LogInFragment : Fragment() {
             return
         }
 
+        binding.apply {
+            lifecycleOwner = viewLifecycleOwner
+            model = viewModel
+        }
+
         binding.acbLogin.setOnClickListener {
             if (Validation.validUser(binding.tietLoginName.text.toString())) {
                 binding.tvLoginConfirmName.visibility = View.INVISIBLE;
             } else {
                 binding.tvLoginConfirmName.visibility = View.VISIBLE;
+                //viewModel.show("fields must not be empty") //TOTO vytvorit pre kazdy validacny field binding
             }
             if(Validation.validPassword(binding.tietLoginPassword.text.toString(), binding.tietLoginPassword.text.toString())){
                 binding.tvLoginConfirmPassword.visibility = View.INVISIBLE
