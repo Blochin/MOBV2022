@@ -1,6 +1,32 @@
 package sk.stu.fei.mobv2022.ui.viewmodels
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
+import sk.stu.fei.mobv2022.data.api.UserResponse
+import sk.stu.fei.mobv2022.data.repository.DataRepository
+import sk.stu.fei.mobv2022.services.Event
 
-class SignUpViewModel : ViewModel() {
+class SignUpViewModel(private val repository: DataRepository) : ViewModel() {
+    private val _message = MutableLiveData<Event<String>>()
+    val message: LiveData<Event<String>>
+        get() = _message
+
+    val user = MutableLiveData<UserResponse>(null)
+
+    val loading = MutableLiveData(false)
+
+    fun signup(name: String, password: String) {
+        viewModelScope.launch {
+            loading.postValue(true)
+            repository.apiUserCreate(
+                name, password,
+                { _message.postValue(Event(it)) },
+                { user.postValue(it) }
+            )
+            loading.postValue(false)
+        }
+    }
 }

@@ -35,4 +35,8 @@
     <style name="TextInputEditText" parent="ThemeOverlay.Material3.AutoCompleteTextView.FilledBox">
         <item name="android:background">@drawable/bg_text_field</item>
     </style>
+    
+    <style name="validate_password">
+        <item name="android:textColor">@color/red</item>
+    </style>
 </resources>
