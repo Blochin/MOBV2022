@@ -35,23 +35,23 @@ class SignUpFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.signUpButton.setOnClickListener {
+        binding.acbSignUp.setOnClickListener {
             if (PasswordValidation.valid(
-                    binding.signUpPasswordEditText.text.toString(),
-                    binding.signUpConfirmPasswordEditText.text.toString()
+                    binding.tietSignUpPassword.text.toString(),
+                    binding.tietSignUpConfirmPassword.text.toString()
                 )
             ) {
-                binding.signUpConfirmPasswordTextView.visibility = View.INVISIBLE
-                binding.signUpConfirmPasswordTextView2.visibility = View.INVISIBLE
+                binding.tvSignUpConfirmPassword.visibility = View.INVISIBLE
+                binding.tvSignUpConfirmPassword2.visibility = View.INVISIBLE
 
                 viewModel.signup(
-                    binding.signUpNameEditText.text.toString(),
-                    binding.signUpPasswordEditText.text.toString()
+                    binding.tietSignUpName.text.toString(),
+                    binding.tietSignUpPassword.text.toString()
                 )
 
             } else {
-                binding.signUpConfirmPasswordTextView.visibility = View.VISIBLE
-                binding.signUpConfirmPasswordTextView2.visibility = View.VISIBLE
+                binding.tvSignUpConfirmPassword.visibility = View.VISIBLE
+                binding.tvSignUpConfirmPassword2.visibility = View.VISIBLE
             }
         }
     }
