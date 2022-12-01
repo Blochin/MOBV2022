@@ -1,15 +1,16 @@
 package sk.stu.fei.mobv2022.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import sk.stu.fei.mobv2022.R
 import sk.stu.fei.mobv2022.databinding.FragmentSignUpBinding
 import sk.stu.fei.mobv2022.services.Injection
-import sk.stu.fei.mobv2022.services.PasswordValidation
+import sk.stu.fei.mobv2022.services.Validation
 import sk.stu.fei.mobv2022.ui.viewmodels.SignUpViewModel
 
 class SignUpFragment : Fragment() {
@@ -36,7 +37,12 @@ class SignUpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.acbSignUp.setOnClickListener {
-            if (PasswordValidation.valid(
+            if(Validation.validUser(binding.tietSignUpName.text.toString())){
+                binding.tvSignUpConfirmUser.visibility = View.INVISIBLE
+            } else {
+                binding.tvSignUpConfirmUser.visibility = View.VISIBLE
+            }
+            if (Validation.validPassword(
                     binding.tietSignUpPassword.text.toString(),
                     binding.tietSignUpConfirmPassword.text.toString()
                 )
@@ -53,6 +59,10 @@ class SignUpFragment : Fragment() {
                 binding.tvSignUpConfirmPassword.visibility = View.VISIBLE
                 binding.tvSignUpConfirmPassword2.visibility = View.VISIBLE
             }
+        }
+
+        binding.tvLoginSubTitle.setOnClickListener {
+            it.findNavController().navigate(R.id.action_to_login)
         }
     }
 }

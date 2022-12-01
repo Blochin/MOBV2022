@@ -1,9 +1,9 @@
 package sk.stu.fei.mobv2022.services
 
-class PasswordValidation {
+class Validation {
 
     companion object Factory {
-        fun valid(password: String, confirmPassword: String): Boolean {
+        fun validPassword(password: String, confirmPassword: String): Boolean {
             if (password.isBlank()) {
                 return false;
             }
@@ -12,6 +12,13 @@ class PasswordValidation {
             }
             if (password.compareTo(confirmPassword) != 0) {
                 return false
+            }
+            return true;
+        }
+
+        fun validUser(userName: String): Boolean {
+            if(userName.isBlank()){
+                return false;
             }
             return true;
         }
