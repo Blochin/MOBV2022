@@ -11,7 +11,7 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/login_title"
+            android:id="@+id/tv_login_title"
             style="@style/Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -23,7 +23,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/sign_up_sub_title"
+            android:id="@+id/tv_sign_up_sub_title"
             style="@style/SubTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,10 +31,10 @@
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/login_title" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_login_title" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/sign_up_name"
+            android:id="@+id/til_login_name"
             style="@style/TextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,45 +44,74 @@
             android:hint="@string/username"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sign_up_sub_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_sign_up_sub_title"
             app:startIconDrawable="@drawable/ic_baseline_account_circle_24">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tiet_login_name"
                 style="@style/TextInputEditText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <TextView
+            android:id="@+id/tv_login_confirm_name"
+            style="@style/validate_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:text="@string/username_valid"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/til_login_name" />
+
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/login_password"
+            android:id="@+id/til_login_password"
             style="@style/TextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="35dp"
             android:layout_marginEnd="25dp"
             android:hint="@string/password"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sign_up_name"
+            app:layout_constraintTop_toBottomOf="@+id/til_login_name"
             app:startIconDrawable="@drawable/ic_baseline_lock_24">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tiet_login_password"
                 style="@style/TextInputEditText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <TextView
+            android:id="@+id/tv_login_confirm_password"
+            style="@style/validate_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:text="@string/password_valid_login"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/til_login_password" />
+
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/acb_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:text="@string/login"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/login_password" />
+            app:layout_constraintTop_toBottomOf="@+id/til_login_password" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

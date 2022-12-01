@@ -5,8 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import sk.stu.fei.mobv2022.R
 import sk.stu.fei.mobv2022.databinding.FragmentLogInBinding
+import sk.stu.fei.mobv2022.services.Injection
+import sk.stu.fei.mobv2022.services.PreferenceData
+import sk.stu.fei.mobv2022.services.Validation
 import sk.stu.fei.mobv2022.ui.viewmodels.LogInViewModel
+import sk.stu.fei.mobv2022.ui.viewmodels.SignUpViewModel
 
 class LogInFragment : Fragment() {
 
@@ -15,6 +23,12 @@ class LogInFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        viewModel = ViewModelProvider(
+            this,
+            Injection.provideViewModelFactory(requireContext())
+        )[LogInViewModel::class.java]
+
     }
 
     override fun onCreateView(
@@ -27,6 +41,37 @@ class LogInFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val x = PreferenceData.getInstance().getUserItem(requireContext())
+        if ((x?.uid ?: "").isNotBlank()) {
+            Navigation.findNavController(view).navigate(R.id.action_to_all_bars)
+            return
+        }
+
+        binding.acbLogin.setOnClickListener {
+            if (Validation.validUser(binding.tietLoginName.text.toString())) {
+                binding.tvLoginConfirmName.visibility = View.INVISIBLE;
+            } else {
+                binding.tvLoginConfirmName.visibility = View.VISIBLE;
+            }
+            if(Validation.validPassword(binding.tietLoginPassword.text.toString(), binding.tietLoginPassword.text.toString())){
+                binding.tvLoginConfirmPassword.visibility = View.INVISIBLE
+                viewModel.login(binding.tietLoginName.text.toString(), binding.tietLoginPassword.text.toString())
+            } else {
+                binding.tvLoginConfirmPassword.visibility = View.VISIBLE
+            }
+        }
+
+        binding.tvSignUpSubTitle.setOnClickListener {
+            it.findNavController().navigate(R.id.action_to_sign_up)
+        }
+
+        viewModel.user.observe(viewLifecycleOwner){
+            it?.let {
+                PreferenceData.getInstance().putUserItem(requireContext(),it)
+                Navigation.findNavController(requireView()).navigate(R.id.action_to_all_bars)
+            }
+        }
     }
 
 }

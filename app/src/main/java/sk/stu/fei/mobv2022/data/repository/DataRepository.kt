@@ -3,6 +3,7 @@ package sk.stu.fei.mobv2022.data.repository
 import android.annotation.SuppressLint
 import sk.stu.fei.mobv2022.data.api.RestApi
 import sk.stu.fei.mobv2022.data.api.UserCreateRequest
+import sk.stu.fei.mobv2022.data.api.UserLoginRequest
 import sk.stu.fei.mobv2022.data.api.UserResponse
 import sk.stu.fei.mobv2022.data.database.LocalCache
 import java.io.IOException
@@ -42,6 +43,38 @@ class DataRepository private constructor(
         } catch (ex: Exception) {
             ex.printStackTrace()
             onError("Sign up failed, error.")
+            onStatus(null)
+        }
+    }
+
+    suspend fun apiUserLogin(
+        name: String,
+        password: String,
+        onError: (error: String) -> Unit,
+        onStatus: (success: UserResponse?) -> Unit
+    ) {
+        try {
+            val resp = service.userLogin(UserLoginRequest(name = name, password = password))
+            if (resp.isSuccessful) {
+                resp.body()?.let { user ->
+                    if (user.uid == "-1"){
+                        onStatus(null)
+                        onError("Wrong name or password.")
+                    }else {
+                        onStatus(user)
+                    }
+                }
+            } else {
+                onError("Failed to login, try again later.")
+                onStatus(null)
+            }
+        } catch (ex: IOException) {
+            ex.printStackTrace()
+            onError("Login failed, check internet connection")
+            onStatus(null)
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            onError("Login in failed, error.")
             onStatus(null)
         }
     }
