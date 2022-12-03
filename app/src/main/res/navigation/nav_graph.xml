@@ -32,6 +32,17 @@
         />
     </fragment>
 
+    <fragment
+        android:id="@+id/barSignInFragment"
+        android:name="sk.stu.fei.mobv2022.ui.fragments.BarSignInFragment"
+        android:label="fragment_bar_sign_in"
+        tools:layout="@layout/fragment_bar_sign_in">
+        <argument
+            android:name="id"
+            app:argType="string"
+            />
+    </fragment>
+
     <action
         android:id="@+id/action_to_login"
         app:destination="@id/logInFragment" />
@@ -47,5 +58,9 @@
     <action
         android:id="@+id/action_to_bar_detail"
         app:destination="@id/barDetailFragment"/>
+
+    <action
+        android:id="@+id/action_to_bar_sign_in"
+        app:destination="@id/barSignInFragment"/>
 
 </navigation>

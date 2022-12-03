@@ -7,25 +7,24 @@ import android.view.View
 import android.view.ViewGroup
 import sk.stu.fei.mobv2022.R
 import sk.stu.fei.mobv2022.databinding.FragmentBarDetailBinding
-import sk.stu.fei.mobv2022.databinding.FragmentBarsBinding
+import sk.stu.fei.mobv2022.databinding.FragmentBarSignInBinding
 import sk.stu.fei.mobv2022.ui.viewmodels.BarDetailViewModel
-import sk.stu.fei.mobv2022.ui.viewmodels.BarListViewModel
+import sk.stu.fei.mobv2022.ui.viewmodels.BarSignInViewModel
 
-class BarDetailFragment : Fragment() {
+class BarSignInFragment : Fragment() {
 
-    private lateinit var binding: FragmentBarDetailBinding
-    private lateinit var viewModel: BarDetailViewModel
+    private lateinit var binding: FragmentBarSignInBinding
+    private lateinit var viewModel: BarSignInViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentBarDetailBinding.inflate(inflater, container, false)
+        binding = FragmentBarSignInBinding.inflate(inflater, container, false)
         return binding.root
     }
-
 }

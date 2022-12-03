@@ -116,6 +116,7 @@ class DataRepository private constructor(
     }
 
     fun getSortedBars(sort: Sort, sortBy: Boolean): LiveData<List<BarItem>?> {
+        //TODO prerobit do parametrov
         if (sort == Sort.NAME) {
             return if (sortBy) {
                 dbBarsByBarNameAsc()
