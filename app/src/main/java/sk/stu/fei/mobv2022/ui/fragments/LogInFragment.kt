@@ -53,22 +53,22 @@ class LogInFragment : Fragment() {
             model = viewModel
         }
 
-        binding.acbLogin.setOnClickListener {
-            if (Validation.validUser(binding.tietLoginName.text.toString())) {
-                binding.tvLoginConfirmName.visibility = View.INVISIBLE;
+        binding.btnLogin.setOnClickListener {
+            if (Validation.validUser(binding.loginName.text.toString())) {
+                binding.loginValidationName.visibility = View.INVISIBLE;
             } else {
-                binding.tvLoginConfirmName.visibility = View.VISIBLE;
+                binding.loginValidationName.visibility = View.VISIBLE;
                 //viewModel.show("fields must not be empty") //TOTO vytvorit pre kazdy validacny field binding
             }
-            if(Validation.validPassword(binding.tietLoginPassword.text.toString(), binding.tietLoginPassword.text.toString())){
-                binding.tvLoginConfirmPassword.visibility = View.INVISIBLE
-                viewModel.login(binding.tietLoginName.text.toString(), binding.tietLoginPassword.text.toString())
+            if(Validation.validPassword(binding.loginPassword.text.toString(), binding.loginPassword.text.toString())){
+                binding.loginValidationPassword.visibility = View.INVISIBLE
+                viewModel.login(binding.loginName.text.toString(), binding.loginPassword.text.toString())
             } else {
-                binding.tvLoginConfirmPassword.visibility = View.VISIBLE
+                binding.loginValidationPassword.visibility = View.VISIBLE
             }
         }
 
-        binding.tvSignUpSubTitle.setOnClickListener {
+        binding.loginSubTitle.setOnClickListener {
             it.findNavController().navigate(R.id.action_to_sign_up)
         }
 

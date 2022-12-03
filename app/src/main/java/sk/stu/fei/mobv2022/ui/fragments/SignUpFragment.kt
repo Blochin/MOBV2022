@@ -45,32 +45,37 @@ class SignUpFragment : Fragment() {
             return
         }
 
-        binding.acbSignUp.setOnClickListener {
-            if(Validation.validUser(binding.tietSignUpName.text.toString())){
+        binding.apply {
+            lifecycleOwner = viewLifecycleOwner
+            model = viewModel
+        }
+
+        binding.btnSignup.setOnClickListener {
+            if(Validation.validUser(binding.signupName.text.toString())){
                 binding.tvSignUpConfirmUser.visibility = View.INVISIBLE
             } else {
                 binding.tvSignUpConfirmUser.visibility = View.VISIBLE
             }
             if (Validation.validPassword(
-                    binding.tietSignUpPassword.text.toString(),
-                    binding.tietSignUpConfirmPassword.text.toString()
+                    binding.signupPassword.text.toString(),
+                    binding.signupConfirmPassword.text.toString()
                 )
             ) {
-                binding.tvSignUpConfirmPassword.visibility = View.INVISIBLE
-                binding.tvSignUpConfirmPassword2.visibility = View.INVISIBLE
+                binding.signupValidationPassword.visibility = View.INVISIBLE
+                binding.signupValidationPassword2.visibility = View.INVISIBLE
 
                 viewModel.signup(
-                    binding.tietSignUpName.text.toString(),
-                    binding.tietSignUpPassword.text.toString()
+                    binding.signupName.text.toString(),
+                    binding.signupPassword.text.toString()
                 )
 
             } else {
-                binding.tvSignUpConfirmPassword.visibility = View.VISIBLE
-                binding.tvSignUpConfirmPassword2.visibility = View.VISIBLE
+                binding.signupValidationPassword.visibility = View.VISIBLE
+                binding.signupValidationPassword2.visibility = View.VISIBLE
             }
         }
 
-        binding.tvLoginSubTitle.setOnClickListener {
+        binding.signupSubTitle.setOnClickListener {
             it.findNavController().navigate(R.id.action_to_login)
         }
 

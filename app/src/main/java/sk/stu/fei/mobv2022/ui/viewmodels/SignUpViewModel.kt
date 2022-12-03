@@ -29,4 +29,6 @@ class SignUpViewModel(private val repository: DataRepository) : ViewModel() {
             loading.postValue(false)
         }
     }
+
+    fun show(msg: String){ _message.postValue(Event(msg))}
 }

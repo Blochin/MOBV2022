@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     tools:context=".ui.fragments.SignUpFragment">
+
+    <data>
+
+        <variable
+            name="model"
+            type="sk.stu.fei.mobv2022.ui.viewmodels.SignUpViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/tv_sign_up_title"
+            android:id="@+id/signup_title"
             style="@style/Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -23,7 +28,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tv_login_sub_title"
+            android:id="@+id/signup_sub_title"
             style="@style/SubTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,10 +36,22 @@
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_sign_up_title" />
+            app:layout_constraintTop_toBottomOf="@+id/signup_title" />
+
+        <TextView
+            android:id="@+id/user_exist"
+            style="@style/validate_password"
+            showText="@{model.message}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            app:layout_constraintBottom_toTopOf="@+id/signup_name_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_sign_up_name"
+            android:id="@+id/signup_name_layout"
             style="@style/TextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,11 +61,11 @@
             android:hint="@string/username"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_login_sub_title"
+            app:layout_constraintTop_toBottomOf="@+id/signup_sub_title"
             app:startIconDrawable="@drawable/ic_baseline_account_circle_24">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tiet_sign_up_name"
+                android:id="@+id/signup_name"
                 style="@style/TextInputEditText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
@@ -60,16 +77,17 @@
             style="@style/validate_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
             android:text="@string/username_valid"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/til_sign_up_name" />
+            app:layout_constraintTop_toBottomOf="@+id/signup_name_layout" />
+
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_sign_up_password"
+            android:id="@+id/signup_password_layout"
             style="@style/TextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -79,34 +97,34 @@
             android:hint="@string/password"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/til_sign_up_name"
+            app:layout_constraintTop_toBottomOf="@+id/signup_name_layout"
             app:startIconDrawable="@drawable/ic_baseline_lock_24">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tiet_sign_up_password"
-                android:inputType="textPassword"
+                android:id="@+id/signup_password"
                 style="@style/TextInputEditText"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:inputType="textPassword" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
-            android:id="@+id/tv_sign_up_confirm_password"
+            android:id="@+id/signup_validation_password"
+            style="@style/validate_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
             android:layout_marginEnd="25dp"
             android:text="@string/password_valid"
-            style="@style/validate_password"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/til_sign_up_password" />
+            app:layout_constraintTop_toBottomOf="@+id/signup_password_layout" />
 
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_sign_up_confirm_password"
+            android:id="@+id/signup_confirm_password_layout"
             style="@style/TextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -116,41 +134,41 @@
             android:hint="@string/confirm_password"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/til_sign_up_password"
+            app:layout_constraintTop_toBottomOf="@+id/signup_password_layout"
             app:startIconDrawable="@drawable/ic_baseline_lock_24">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tiet_sign_up_confirm_password"
-                android:inputType="textPassword"
+                android:id="@+id/signup_confirm_password"
                 style="@style/TextInputEditText"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:inputType="textPassword" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
-            android:id="@+id/tv_sign_up_confirm_password2"
+            android:id="@+id/signup_validation_password2"
+            style="@style/validate_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
             android:layout_marginEnd="25dp"
-            style="@style/validate_password"
-            android:visibility="invisible"
             android:text="@string/password_valid"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/til_sign_up_confirm_password" />
+            app:layout_constraintTop_toBottomOf="@+id/signup_confirm_password_layout" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/acb_sign_up"
+            android:id="@+id/btn_signup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:text="@string/sign_up"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/til_sign_up_confirm_password" />
+            app:layout_constraintTop_toBottomOf="@+id/signup_confirm_password_layout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</FrameLayout>
+</layout>
