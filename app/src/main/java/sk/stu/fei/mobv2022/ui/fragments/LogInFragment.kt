@@ -58,7 +58,7 @@ class LogInFragment : Fragment() {
                 binding.loginValidationName.visibility = View.INVISIBLE;
             } else {
                 binding.loginValidationName.visibility = View.VISIBLE;
-                //viewModel.show("fields must not be empty") //TOTO vytvorit pre kazdy validacny field binding
+                //viewModel.show("fields must not be empty") //TODO vytvorit pre kazdy validacny field binding
             }
             if(Validation.validPassword(binding.loginPassword.text.toString(), binding.loginPassword.text.toString())){
                 binding.loginValidationPassword.visibility = View.INVISIBLE

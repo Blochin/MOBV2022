@@ -15,6 +15,7 @@ import sk.stu.fei.mobv2022.services.Injection
 import sk.stu.fei.mobv2022.services.PreferenceData
 import sk.stu.fei.mobv2022.ui.viewmodels.BarListViewModel
 import sk.stu.fei.mobv2022.ui.viewmodels.LogInViewModel
+import sk.stu.fei.mobv2022.ui.viewmodels.Sort
 
 class BarsFragment : Fragment() {
 
@@ -53,6 +54,31 @@ class BarsFragment : Fragment() {
                     } else -> false
                 }
             }
+            it.sortByName.setOnClickListener{
+                binding.apply {
+                    model = model
+                }.also {
+                    it.barsRecyclerView.scrollToPosition(0)
+                }
+                viewModel.setSort(Sort.NAME)
+            }
+            it.sortByDistance.setOnClickListener{
+                binding.apply {
+                    model = model
+                }.also {
+                    it.barsRecyclerView.scrollToPosition(0)
+                }
+                viewModel.setSort(Sort.DISTANCE)
+            }
+            it.sortByCount.setOnClickListener{
+                binding.apply {
+                    model = model
+                }.also {
+                    it.barsRecyclerView.scrollToPosition(0)
+                }
+                viewModel.setSort(Sort.COUNT)
+            }
+
             it.swiperefresh.setOnRefreshListener {
                 viewModel.refreshData()
             }
