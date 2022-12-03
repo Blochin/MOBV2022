@@ -1,6 +1,5 @@
 package sk.stu.fei.mobv2022.ui.components.pubsRecyclerView.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,8 +27,8 @@ class BarsAdapter() : RecyclerView.Adapter<BarsAdapter.ItemViewHolder>() {
     ) : RecyclerView.ViewHolder(view) {
         val item : ConstraintLayout  = view.findViewById(R.id.bar_item)
         val nameView: TextView = view.findViewById(R.id.tv_name)
-        val typeView: TextView = view.findViewById(R.id.tv_count)
-        val userView: TextView = view.findViewById(R.id.c_type)
+        val typeView: TextView = view.findViewById(R.id.c_type)
+        val userView: TextView = view.findViewById(R.id.tv_count)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {

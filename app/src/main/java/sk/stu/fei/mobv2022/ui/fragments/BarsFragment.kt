@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import com.google.android.material.bottomnavigation.BottomNavigationItemView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import sk.stu.fei.mobv2022.R
 import sk.stu.fei.mobv2022.databinding.FragmentBarsBinding
 import sk.stu.fei.mobv2022.services.Injection
@@ -41,11 +43,22 @@ class BarsFragment : Fragment() {
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             model = viewModel
-        }.also {
-            it.logout.setOnClickListener {
-                PreferenceData.getInstance().clearData(requireContext())
-                Navigation.findNavController(it).navigate(R.id.action_to_login)
+        }.also { it ->
+            it.bottomNavigation.setOnNavigationItemSelectedListener{ item->
+                when(item.itemId){
+                    R.id.logout->{
+                        PreferenceData.getInstance().clearData(requireContext())
+                        Navigation.findNavController(requireView()).navigate(R.id.action_to_login)
+                        true
+                    } else -> false
+                }
             }
+            it.swiperefresh.setOnRefreshListener {
+                viewModel.refreshData()
+            }
+        }
+        viewModel.loading.observe(viewLifecycleOwner) {
+            binding.swiperefresh.isRefreshing = it
         }
     }
 }
