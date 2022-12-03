@@ -116,25 +116,12 @@ class DataRepository private constructor(
     }
 
     fun getSortedBars(sort: Sort, sortBy: Boolean): LiveData<List<BarItem>?> {
-        //TODO prerobit do parametrov
         if (sort == Sort.NAME) {
-            return if (sortBy) {
-                dbBarsByBarNameAsc()
-            } else {
-                dbBarsByBarNameDesc()
-            }
+            return getAllOrderByName(sortBy)
         } else if (sort == Sort.COUNT) {
-            return if (sortBy) {
-                dbBarsByUsersCountAsc()
-            } else {
-                dbBarsByUsersCountDesc()
-            }
+            return getAllOrderByUsers(sortBy)
         } else if (sort == Sort.DISTANCE) {
-            return if (sortBy) {
-                dbBars()
-            } else {
-                dbBars()
-            }
+            return dbBars()
         } else {
             return dbBars()
         }
@@ -144,20 +131,12 @@ class DataRepository private constructor(
         return cache.getBars()
     }
 
-    fun dbBarsByBarNameAsc(): LiveData<List<BarItem>?> {
-        return cache.getBarsByBarNameAsc()
+    fun getAllOrderByName(orderBy: Boolean): LiveData<List<BarItem>?> {
+        return  cache.getAllOrderByName(orderBy)
     }
 
-    fun dbBarsByBarNameDesc(): LiveData<List<BarItem>?> {
-        return cache.getBarsByBarNameDesc()
-    }
-
-    fun dbBarsByUsersCountAsc(): LiveData<List<BarItem>?> {
-        return cache.getBarsByUsersCountAsc()
-    }
-
-    fun dbBarsByUsersCountDesc(): LiveData<List<BarItem>?> {
-        return cache.getBarsByUsersCountDesc()
+    fun getAllOrderByUsers(orderBy: Boolean): LiveData<List<BarItem>?> {
+        return  cache.getAllOrderByUsers(orderBy)
     }
 
     companion object {

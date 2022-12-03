@@ -14,8 +14,6 @@ class LocalCache(private val dao: DbDao) {
     }
 
     fun getBars(): LiveData<List<BarItem>?> = dao.getBars()
-    fun getBarsByBarNameAsc(): LiveData<List<BarItem>?> = dao.getBarsByBarNameAsc()
-    fun getBarsByBarNameDesc(): LiveData<List<BarItem>?> = dao.getBarsByBarNameDesc()
-    fun getBarsByUsersCountAsc(): LiveData<List<BarItem>?> = dao.getBarsByUsersCountAsc()
-    fun getBarsByUsersCountDesc(): LiveData<List<BarItem>?> = dao.getBarsByUsersCountDesc()
+    fun getAllOrderByName(orderBy: Boolean): LiveData<List<BarItem>?> = dao.getAllOrderByName(orderBy)
+    fun getAllOrderByUsers(orderBy: Boolean): LiveData<List<BarItem>?> = dao.getAllOrderByUsers(orderBy)
 }

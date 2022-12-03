@@ -18,15 +18,10 @@ interface DbDao {
     @Query("SELECT * FROM bars order by users DESC, name ASC")
     fun getBars(): LiveData<List<BarItem>?>
 
-    @Query("SELECT * FROM bars order by name ASC")
-    fun getBarsByBarNameAsc(): LiveData<List<BarItem>?>
+    @Query("SELECT * FROM bars ORDER BY CASE WHEN :isAsc = 1 THEN users END ASC, CASE WHEN :isAsc = 0 THEN users END DESC")
+    fun getAllOrderByUsers(isAsc: Boolean): LiveData<List<BarItem>?>
 
-    @Query("SELECT * FROM bars order by name DESC")
-    fun getBarsByBarNameDesc(): LiveData<List<BarItem>?>
+    @Query("SELECT * FROM bars ORDER BY CASE WHEN :isAsc = 1 THEN name END ASC, CASE WHEN :isAsc = 0 THEN name END DESC")
+    fun getAllOrderByName(isAsc: Boolean): LiveData<List<BarItem>?>
 
-    @Query("SELECT * FROM bars order by users ASC")
-    fun getBarsByUsersCountAsc(): LiveData<List<BarItem>?>
-
-    @Query("SELECT * FROM bars order by users DESC")
-    fun getBarsByUsersCountDesc(): LiveData<List<BarItem>?>
 }
