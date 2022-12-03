@@ -1,13 +1,17 @@
 package sk.stu.fei.mobv2022.ui.components.pubsRecyclerView.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import sk.stu.fei.mobv2022.R
 import sk.stu.fei.mobv2022.data.database.model.BarItem
 import sk.stu.fei.mobv2022.services.autoNotify
+import sk.stu.fei.mobv2022.ui.fragments.BarDetailFragmentDirections
 import kotlin.properties.Delegates
 
 class BarsAdapter() : RecyclerView.Adapter<BarsAdapter.ItemViewHolder>() {
@@ -22,6 +26,7 @@ class BarsAdapter() : RecyclerView.Adapter<BarsAdapter.ItemViewHolder>() {
         private val parent : ViewGroup, view: View = LayoutInflater.from(parent.context).inflate(
             R.layout.bar_item, parent,false)
     ) : RecyclerView.ViewHolder(view) {
+        val item : ConstraintLayout  = view.findViewById(R.id.bar_item)
         val nameView: TextView = view.findViewById(R.id.tv_name)
         val typeView: TextView = view.findViewById(R.id.tv_count)
         val userView: TextView = view.findViewById(R.id.c_type)
@@ -38,6 +43,9 @@ class BarsAdapter() : RecyclerView.Adapter<BarsAdapter.ItemViewHolder>() {
         holder.nameView.text = item.name
         holder.typeView.text = item.type
         holder.userView.text = item.users.toString()
+        holder.item.setOnClickListener{
+            Navigation.findNavController(it).navigate(BarDetailFragmentDirections.actionToBarDetail(id))
+        }
     }
 
     override fun getItemCount(): Int {

@@ -21,6 +21,17 @@
         android:label="fragment_bars"
         tools:layout="@layout/fragment_bars" />
 
+    <fragment
+        android:id="@+id/barDetailFragment"
+        android:name="sk.stu.fei.mobv2022.ui.fragments.BarDetailFragment"
+        android:label="fragment_bar_detail"
+        tools:layout="@layout/fragment_bar_detail">
+        <argument
+            android:name="id"
+            app:argType="string"
+        />
+    </fragment>
+
     <action
         android:id="@+id/action_to_login"
         app:destination="@id/logInFragment" />
@@ -32,5 +43,9 @@
     <action
         android:id="@+id/action_to_all_bars"
         app:destination="@id/barsFragment" />
+
+    <action
+        android:id="@+id/action_to_bar_detail"
+        app:destination="@id/barDetailFragment"/>
 
 </navigation>
