@@ -9,6 +9,7 @@ import sk.stu.fei.mobv2022.data.api.UserResponse
 import sk.stu.fei.mobv2022.data.database.LocalCache
 import sk.stu.fei.mobv2022.data.database.model.BarItem
 import sk.stu.fei.mobv2022.ui.viewmodels.Sort
+import sk.stu.fei.mobv2022.ui.viewmodels.data.NearbyBar
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -137,6 +138,41 @@ class DataRepository private constructor(
 
     fun getAllOrderByUsers(orderBy: Boolean): LiveData<List<BarItem>?> {
         return  cache.getAllOrderByUsers(orderBy)
+    }
+
+    suspend fun apiBarDetail(
+        id: String,
+        onError: (error: String) -> Unit
+    ) : NearbyBar? {
+        var nearby:NearbyBar? = null
+        try {
+            val q = "[out:json];node($id);out body;>;out skel;"
+            val resp = service.barDetail(q)
+            if (resp.isSuccessful) {
+                resp.body()?.let { bars ->
+                    if (bars.elements.isNotEmpty()) {
+                        val b = bars.elements.get(0)
+                        nearby = NearbyBar(
+                            b.id,
+                            b.tags.getOrDefault("name", ""),
+                            b.tags.getOrDefault("amenity", ""),
+                            b.lat,
+                            b.lon,
+                            b.tags
+                        )
+                    }
+                } ?: onError("Failed to load bars")
+            } else {
+                onError("Failed to read bars")
+            }
+        } catch (ex: IOException) {
+            ex.printStackTrace()
+            onError("Failed to load bars, check internet connection")
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            onError("Failed to load bars, error.")
+        }
+        return nearby
     }
 
     companion object {

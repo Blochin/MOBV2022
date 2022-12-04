@@ -27,4 +27,5 @@
     <string name="sort_distance">Sort Distance</string>
     <string name="sort_count">Sort Count</string>
     <string name="sign_in">Sign in</string>
+    <string name="show_on_map">Show on map</string>
 </resources>

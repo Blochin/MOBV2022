@@ -45,15 +45,6 @@ class BarsFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
             model = viewModel
         }.also { it ->
-            it.bottomNavigation.setOnNavigationItemSelectedListener{ item->
-                when(item.itemId){
-                    R.id.logout->{
-                        PreferenceData.getInstance().clearData(requireContext())
-                        Navigation.findNavController(requireView()).navigate(R.id.action_to_login)
-                        true
-                    } else -> false
-                }
-            }
             it.sortByName.setOnClickListener{
                 binding.apply {
                     model = model
@@ -85,6 +76,16 @@ class BarsFragment : Fragment() {
         }
         viewModel.loading.observe(viewLifecycleOwner) {
             binding.swiperefresh.isRefreshing = it
+        }
+
+        BottomNavigationView.OnNavigationItemSelectedListener{ item->
+            when(item.itemId){
+                R.id.logout->{
+                    PreferenceData.getInstance().clearData(requireContext())
+                    Navigation.findNavController(requireView()).navigate(R.id.action_to_login)
+                    true
+                } else -> false
+            }
         }
     }
 }
