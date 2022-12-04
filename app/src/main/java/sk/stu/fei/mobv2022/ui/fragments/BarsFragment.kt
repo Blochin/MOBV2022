@@ -67,6 +67,8 @@ class BarsFragment : Fragment() {
                 }.also {
                     it.barsRecyclerView.scrollToPosition(0)
                 }
+                PreferenceData.getInstance().clearData(requireContext())
+                Navigation.findNavController(requireView()).navigate(R.id.action_to_login)
                 viewModel.setSort(Sort.COUNT)
             }
 
@@ -78,7 +80,7 @@ class BarsFragment : Fragment() {
             binding.swiperefresh.isRefreshing = it
         }
 
-        BottomNavigationView.OnNavigationItemSelectedListener{ item->
+        /*BottomNavigationView.OnNavigationItemSelectedListener{ item->
             when(item.itemId){
                 R.id.logout->{
                     PreferenceData.getInstance().clearData(requireContext())
@@ -86,6 +88,6 @@ class BarsFragment : Fragment() {
                     true
                 } else -> false
             }
-        }
+        }*/
     }
 }

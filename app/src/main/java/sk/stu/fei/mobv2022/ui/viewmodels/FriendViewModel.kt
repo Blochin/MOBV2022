@@ -1,10 +1,8 @@
 package sk.stu.fei.mobv2022.ui.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import kotlinx.coroutines.launch
+import sk.stu.fei.mobv2022.data.database.model.FriendItem
 import sk.stu.fei.mobv2022.data.repository.DataRepository
 import sk.stu.fei.mobv2022.services.Event
 
@@ -15,6 +13,14 @@ class FriendViewModel(private val repository: DataRepository) : ViewModel() {
     private val _message = MutableLiveData<Event<String>>()
     val message: LiveData<Event<String>>
         get() = _message
+
+    val friends : LiveData<List<FriendItem>?>
+        = liveData {
+        loading.postValue(true)
+        repository.getFriends { _message.postValue(Event(it)) }
+        loading.postValue(false)
+        emitSource(repository.dbFriends())
+    }
 
     private val onError = { errorMessage: String ->
         loading.postValue(false)
@@ -35,4 +41,6 @@ class FriendViewModel(private val repository: DataRepository) : ViewModel() {
     fun setMessage(message: String) {
         _message.postValue(Event(message))
     }
+
+    fun show(msg: String){ _message.postValue(Event(msg))}
 }

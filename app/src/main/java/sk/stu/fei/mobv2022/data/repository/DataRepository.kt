@@ -7,6 +7,7 @@ import kotlinx.coroutines.withContext
 import sk.stu.fei.mobv2022.data.api.*
 import sk.stu.fei.mobv2022.data.database.LocalCache
 import sk.stu.fei.mobv2022.data.database.model.BarItem
+import sk.stu.fei.mobv2022.data.database.model.FriendItem
 import sk.stu.fei.mobv2022.ui.viewmodels.Sort
 import sk.stu.fei.mobv2022.ui.viewmodels.data.NearbyBar
 import java.io.IOException
@@ -132,18 +133,18 @@ class DataRepository private constructor(
     }
 
     fun getAllOrderByName(orderBy: Boolean): LiveData<List<BarItem>?> {
-        return  cache.getAllOrderByName(orderBy)
+        return cache.getAllOrderByName(orderBy)
     }
 
     fun getAllOrderByUsers(orderBy: Boolean): LiveData<List<BarItem>?> {
-        return  cache.getAllOrderByUsers(orderBy)
+        return cache.getAllOrderByUsers(orderBy)
     }
 
     suspend fun apiBarDetail(
         id: String,
         onError: (error: String) -> Unit
-    ) : NearbyBar? {
-        var nearby:NearbyBar? = null
+    ): NearbyBar? {
+        var nearby: NearbyBar? = null
         try {
             val q = "[out:json];node($id);out body;>;out skel;"
             val resp = service.barDetail(q)
@@ -180,9 +181,9 @@ class DataRepository private constructor(
         withContext(Dispatchers.IO) {
             try {
                 val resp = service.addFriend(AddFriendRequest(name))
-                if(resp.isSuccessful){
+                if (resp.isSuccessful) {
                     onResolved("Friend $name successfully added.")
-                }else{
+                } else {
                     onError("Failed to add a friend, try a different name.")
                 }
             } catch (ex: IOException) {
@@ -191,6 +192,39 @@ class DataRepository private constructor(
                 onError("Failed to add a friend, error.")
             }
         }
+    }
+
+    suspend fun getFriends(onError: (error: String) -> Unit){
+        try {
+            val resp = service.getFriends()
+            if (resp.isSuccessful){
+                resp.body()?.let { friends ->
+                    val f = friends.map{
+                        FriendItem(
+                            it.user_id,
+                            it.user_name,
+                            it.bar_id,
+                            it.bar_name,
+                            it.time,
+                            it.bar_lat,
+                            it.bar_lon
+                        )
+                    }
+                    cache.deleteAllFriends()
+                    cache.insertAllFriend(f)
+                }
+            }
+        }catch (ex: IOException) {
+            ex.printStackTrace()
+            onError("Failed to load friends, check internet connection")
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            onError("Failed to load friends, error.")
+        }
+    }
+
+    fun dbFriends(): LiveData<List<FriendItem>?> {
+        return cache.getAllFriends()
     }
 
     companion object {

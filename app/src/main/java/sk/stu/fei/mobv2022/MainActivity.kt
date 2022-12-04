@@ -1,11 +1,15 @@
 package sk.stu.fei.mobv2022
 
+import android.content.ClipData
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import sk.stu.fei.mobv2022.services.PreferenceData
 
 class MainActivity : AppCompatActivity() {
 
