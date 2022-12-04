@@ -43,6 +43,12 @@
             />
     </fragment>
 
+    <fragment
+        android:id="@+id/addFriendFragment"
+        android:name="sk.stu.fei.mobv2022.ui.fragments.AddFriendFragment"
+        android:label="fragment_add_friend"
+        tools:layout="@layout/fragment_add_friend" />
+
     <action
         android:id="@+id/action_to_login"
         app:destination="@id/logInFragment" />
@@ -62,5 +68,9 @@
     <action
         android:id="@+id/action_to_bar_sign_in"
         app:destination="@id/barSignInFragment"/>
+
+    <action
+        android:id="@+id/action_to_add_friend"
+        app:destination="@id/addFriendFragment"/>
 
 </navigation>

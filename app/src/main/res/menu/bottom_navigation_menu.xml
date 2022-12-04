@@ -1,12 +1,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/page_0"
+        android:id="@+id/barsFragment"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_sports_bar_24"
         android:title="@string/all_bars"/>
 
     <item
-        android:id="@+id/page_1"
+        android:id="@+id/addFriendFragment"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_group_add_24"
         android:title="@string/add_friend"/>

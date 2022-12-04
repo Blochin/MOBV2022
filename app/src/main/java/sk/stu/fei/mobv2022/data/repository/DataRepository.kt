@@ -2,10 +2,9 @@ package sk.stu.fei.mobv2022.data.repository
 
 import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
-import sk.stu.fei.mobv2022.data.api.RestApi
-import sk.stu.fei.mobv2022.data.api.UserCreateRequest
-import sk.stu.fei.mobv2022.data.api.UserLoginRequest
-import sk.stu.fei.mobv2022.data.api.UserResponse
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import sk.stu.fei.mobv2022.data.api.*
 import sk.stu.fei.mobv2022.data.database.LocalCache
 import sk.stu.fei.mobv2022.data.database.model.BarItem
 import sk.stu.fei.mobv2022.ui.viewmodels.Sort
@@ -173,6 +172,25 @@ class DataRepository private constructor(
             onError("Failed to load bars, error.")
         }
         return nearby
+    }
+
+    suspend fun addFriend(
+        name: String, onResolved: (response: String) -> Unit, onError: (response: String) -> Unit
+    ) {
+        withContext(Dispatchers.IO) {
+            try {
+                val resp = service.addFriend(AddFriendRequest(name))
+                if(resp.isSuccessful){
+                    onResolved("Friend $name successfully added.")
+                }else{
+                    onError("Failed to add a friend, try a different name.")
+                }
+            } catch (ex: IOException) {
+                onError("Failed to add a friend, check internet connection")
+            } catch (ex: Exception) {
+                onError("Failed to add a friend, error.")
+            }
+        }
     }
 
     companion object {

@@ -28,4 +28,6 @@
     <string name="sort_count">Sort Count</string>
     <string name="sign_in">Sign in</string>
     <string name="show_on_map">Show on map</string>
+    <string name="search_for_friends">Search for friends</string>
+    <string name="search">Search</string>
 </resources>
