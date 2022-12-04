@@ -53,10 +53,9 @@ class BarDetailFragment : Fragment() {
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             model = viewModel
-        }.also {
+        }.also { bnd->
             /*bnd.back.setOnClickListener { it.findNavController().popBackStack() }*/
-
-            it.mapButton.setOnClickListener {
+            bnd.mapButton.setOnClickListener {
                 startActivity(
                     Intent(
                         Intent.ACTION_VIEW,
