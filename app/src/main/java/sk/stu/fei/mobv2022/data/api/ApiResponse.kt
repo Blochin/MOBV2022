@@ -1,5 +1,7 @@
 package sk.stu.fei.mobv2022.data.api
 
+import sk.stu.fei.mobv2022.ui.viewmodels.data.Tag
+
 
 data class UserResponse(
     val uid: String,
@@ -21,7 +23,7 @@ data class BarDetailItemResponse(
     val id: String,
     val lat: Double,
     val lon: Double,
-    val tags: Map<String, String>
+    val tags: Tag
 )
 
 data class BarDetailResponse(

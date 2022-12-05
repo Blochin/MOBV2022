@@ -55,6 +55,24 @@ class BarDetailFragment : Fragment() {
             model = viewModel
         }.also { bnd->
             /*bnd.back.setOnClickListener { it.findNavController().popBackStack() }*/
+
+            viewModel.bar.observe(viewLifecycleOwner) { barDetail ->
+                bnd.barName.text = barDetail.name
+                bnd.barType.text = barDetail.type
+                bnd.barUsers.text = barDetail.users.toString()
+                bnd.barLat.text = barDetail.lat.toString()
+                bnd.barLon.text = barDetail.lon.toString()
+
+                barDetail.tags?.phone.let {
+                    bnd.barPhone.text = it ?: ""
+                }
+
+                barDetail.tags?.website.let {
+                    bnd.barWebsite.text = it ?: ""
+                }
+            }
+
+
             bnd.mapButton.setOnClickListener {
                 startActivity(
                     Intent(

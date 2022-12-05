@@ -2,10 +2,10 @@ package sk.stu.fei.mobv2022.ui.viewmodels
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
+import sk.stu.fei.mobv2022.data.database.model.BarItem
 import sk.stu.fei.mobv2022.data.repository.DataRepository
 import sk.stu.fei.mobv2022.services.Event
-import sk.stu.fei.mobv2022.ui.viewmodels.data.BarDetailItem
-import sk.stu.fei.mobv2022.ui.viewmodels.data.NearbyBar
+import sk.stu.fei.mobv2022.ui.viewmodels.data.BarDetail
 
 class BarDetailViewModel(private val repository: DataRepository) : ViewModel()  {
 
@@ -15,26 +15,52 @@ class BarDetailViewModel(private val repository: DataRepository) : ViewModel()  
 
     val loading = MutableLiveData(false)
 
-    val bar = MutableLiveData<NearbyBar>(null)
-    val type = bar.map { it?.tags?.getOrDefault("amenity", "") ?: "" }
+    private val _bar = MutableLiveData<BarDetail>()
+    val bar: LiveData<BarDetail> get() = _bar
 
-    val details: LiveData<List<BarDetailItem>> = bar.switchMap {
+    private val onError = { errorMessage: String ->
+        loading.postValue(false)
+        _message.postValue(Event(errorMessage))
+    }
+
+    val bars: LiveData<List<BarItem>?> =
         liveData {
-            it?.let {
-                emit(it.tags.map {
-                    BarDetailItem(it.key, it.value)
+            loading.postValue(true)
+            emitSource(repository.dbBars())
+            loading.postValue(false)
+        }
+
+
+    fun loadBar(id: String) {
+        viewModelScope.launch {
+            loading.postValue(true)
+            val bar = repository.apiBarDetail(id, onError)
+            val barDb = bars.value?.find { it.id == id }
+            bar?.let {
+                _bar.postValue(BarDetail(
+                    bar.id,
+                    bar.name,
+                    bar.type,
+                    bar.lat,
+                    bar.lon,
+                    bar.tags,
+                    bar.distance
+                ).apply {
+                    barDb?.let {
+                        this.users = it.users
+                    }
                 })
-            } ?: emit(emptyList<BarDetailItem>())
+            }
         }
     }
 
-    fun loadBar(id: String) {
+   /* fun loadBar(id: String) {
         if (id.isBlank())
             return
         viewModelScope.launch {
             loading.postValue(true)
-            bar.postValue(repository.apiBarDetail(id) { _message.postValue(Event(it)) })
+            _bar.postValue(repository.apiBarDetail(id) { _message.postValue(Event(it)) })
             loading.postValue(false)
         }
-    }
+    }*/
 }

@@ -1,55 +1,34 @@
 package sk.stu.fei.mobv2022.ui.viewmodels.data
 
 import android.location.Location
+import sk.stu.fei.mobv2022.services.GpsLocation
+
 
 data class MyLocation(
     var lat: Double,
     var lon: Double
 )
 
-class NearbyBar(
+open class NearbyBar(
     val id: String,
-    val name: String,
-    val type: String,
+    val name: String? = "Missing name",
+    val type: String? = "",
     val lat: Double,
     val lon: Double,
-    val tags: Map<String, String>,
-    var distance: Double = 0.0
+    val tags: Tag?,
+    var distance: Double = 0.0,
+    var isPinned: Boolean = false
 ){
 
-    fun distanceTo(location: MyLocation): Double{
-        return Location("").apply {
-            latitude=lat
-            longitude=lon
+    fun distanceTo(toLocation: GpsLocation) {
+        this.distance =  Location("").apply {
+            latitude = lat
+            longitude = lon
         }.distanceTo(Location("").apply {
-            latitude=location.lat
-            longitude=location.lon
+            latitude = toLocation.lat
+            longitude = toLocation.long
         }).toDouble()
     }
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other !is NearbyBar) return false
 
-        if (type != other.type) return false
-        if (id != other.id) return false
-        if (lat != other.lat) return false
-        if (lon != other.lon) return false
-        if (tags != other.tags) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = type.hashCode()
-        result = 31 * result + id.hashCode()
-        result = 31 * result + lat.hashCode()
-        result = 31 * result + lon.hashCode()
-        result = 31 * result + tags.hashCode()
-        return result
-    }
-
-    override fun toString(): String {
-        return "NearbyBar(type='$type', id=$id, lat=$lat, lon=$lon, tags=$tags)"
-    }
 }

@@ -154,8 +154,8 @@ class DataRepository private constructor(
                         val b = bars.elements.get(0)
                         nearby = NearbyBar(
                             b.id,
-                            b.tags.getOrDefault("name", ""),
-                            b.tags.getOrDefault("amenity", ""),
+                            b.tags.name,
+                            b.tags.amenity,
                             b.lat,
                             b.lon,
                             b.tags
