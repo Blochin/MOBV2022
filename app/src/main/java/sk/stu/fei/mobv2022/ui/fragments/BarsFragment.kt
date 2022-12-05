@@ -44,35 +44,26 @@ class BarsFragment : Fragment() {
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             model = viewModel
-        }.also { it ->
-            it.sortByName.setOnClickListener{
+        }.also { bnd ->
+            bnd.sortByName.setOnClickListener{
                 binding.apply {
-                    model = model
-                }.also {
-                    it.barsRecyclerView.scrollToPosition(0)
+                    model = viewModel
                 }
                 viewModel.setSort(Sort.NAME)
             }
-            it.sortByDistance.setOnClickListener{
+            bnd.sortByDistance.setOnClickListener{
                 binding.apply {
-                    model = model
-                }.also {
-                    it.barsRecyclerView.scrollToPosition(0)
+                    model = viewModel
                 }
                 viewModel.setSort(Sort.DISTANCE)
             }
-            it.sortByCount.setOnClickListener{
+            bnd.sortByCount.setOnClickListener{
                 binding.apply {
-                    model = model
-                }.also {
-                    it.barsRecyclerView.scrollToPosition(0)
+                    model = viewModel
                 }
-                PreferenceData.getInstance().clearData(requireContext())
-                Navigation.findNavController(requireView()).navigate(R.id.action_to_login)
                 viewModel.setSort(Sort.COUNT)
             }
-
-            it.swiperefresh.setOnRefreshListener {
+            bnd.swiperefresh.setOnRefreshListener {
                 viewModel.refreshData()
             }
         }

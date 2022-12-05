@@ -51,7 +51,6 @@ class BarListViewModel(private val repository: DataRepository) : ViewModel() {
             repository.apiBarList { _message.postValue(Event(it)) }
             loading.postValue(false)
             emitSource(repository.getSortedBars(sort, isAsc))
-            refreshData()
         }
     }
 
