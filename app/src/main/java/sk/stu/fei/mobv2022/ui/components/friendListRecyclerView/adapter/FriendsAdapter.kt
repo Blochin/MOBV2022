@@ -5,10 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import sk.stu.fei.mobv2022.R
 import sk.stu.fei.mobv2022.data.database.model.FriendItem
 import sk.stu.fei.mobv2022.services.autoNotify
+import sk.stu.fei.mobv2022.ui.fragments.BarDetailFragmentDirections
 import kotlin.properties.Delegates
 
 class FriendsAdapter : RecyclerView.Adapter<FriendsAdapter.ItemViewHolder>() {
@@ -34,11 +36,16 @@ class FriendsAdapter : RecyclerView.Adapter<FriendsAdapter.ItemViewHolder>() {
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = items[position]
-        val id = item.id
+        val barId = item.barId?: "-1"
 
         holder.nameView.text = item.name
         holder.barNameView.text = item.barName
 
+        holder.item.setOnClickListener{
+            if(barId != "-1"){
+                Navigation.findNavController(it).navigate(BarDetailFragmentDirections.actionToBarDetail(barId))
+            }
+        }
     }
 
     override fun getItemCount(): Int {

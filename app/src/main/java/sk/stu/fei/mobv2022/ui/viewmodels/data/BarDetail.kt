@@ -2,7 +2,7 @@ package sk.stu.fei.mobv2022.ui.viewmodels.data
 
 class BarDetail(
     id: String,
-    name: String? = "Missing name",
+    name: String? = "",
     type: String? = "",
     lat: Double,
     long: Double,

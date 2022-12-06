@@ -133,11 +133,9 @@ class DataRepository private constructor(
         return cache.getBars()
     }
 
-    fun dbBarsList(id: String): BarItem {
+    suspend fun dbBarById(id: String): BarItem {
         return cache.getBarById(id)
     }
-
-
 
     fun getAllOrderByName(orderBy: Boolean): LiveData<List<BarItem>?> {
         return cache.getAllOrderByName(orderBy)

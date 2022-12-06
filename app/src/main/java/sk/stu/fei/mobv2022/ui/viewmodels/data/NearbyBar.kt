@@ -10,13 +10,12 @@ data class MyLocation(
 
 open class NearbyBar(
     val id: String,
-    val name: String? = "Missing name",
+    val name: String? = "",
     val type: String? = "",
     val lat: Double,
     val lon: Double,
     val tags: Tag?,
     var distance: Double = 0.0,
-    var isPinned: Boolean = false
 ){
 
     fun distanceTo(toLocation: MyLocation): Double {

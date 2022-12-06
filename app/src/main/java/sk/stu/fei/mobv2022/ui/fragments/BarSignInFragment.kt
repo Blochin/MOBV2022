@@ -120,15 +120,14 @@ class BarSignInFragment : Fragment() {
                     }
                 }
             }
+
         }
 
-        loadData()
-
-        /*if (checkPermissions()) {
+        if (checkPermissions()) {
             loadData()
         } else {
             Navigation.findNavController(requireView()).navigate(R.id.action_to_all_bars)
-        }*/
+        }
 
         viewModel.message.observe(viewLifecycleOwner) {
             if (PreferenceData.getInstance().getUserItem(requireContext()) == null) {
@@ -177,7 +176,7 @@ class BarSignInFragment : Fragment() {
 
         geofencingClient.addGeofences(request, geofenceIntent).run {
             addOnSuccessListener {
-                Navigation.findNavController(requireView()).navigate(R.id.action_to_all_bars)
+                //Navigation.findNavController(requireView()).navigate(R.id.action_to_all_bars)
             }
             addOnFailureListener {
                 viewModel.show("Geofence failed to create.") //permission is not granted for All times.
