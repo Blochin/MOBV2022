@@ -33,6 +33,11 @@ class ViewModelFactory(private val repository: DataRepository) : ViewModelProvid
             return FriendViewModel(repository) as T
         }
 
+        if (modelClass.isAssignableFrom(BarSignInViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return BarSignInViewModel(repository) as T
+        }
+
         throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

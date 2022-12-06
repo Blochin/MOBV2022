@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import sk.stu.fei.mobv2022.R
 import sk.stu.fei.mobv2022.data.database.model.FriendItem
 import sk.stu.fei.mobv2022.services.autoNotify
-import sk.stu.fei.mobv2022.ui.components.pubsRecyclerView.adapter.BarsAdapter
 import kotlin.properties.Delegates
 
 class FriendsAdapter : RecyclerView.Adapter<FriendsAdapter.ItemViewHolder>() {

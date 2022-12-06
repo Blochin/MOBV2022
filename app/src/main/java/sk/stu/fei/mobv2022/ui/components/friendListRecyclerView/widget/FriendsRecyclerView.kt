@@ -5,11 +5,8 @@ import android.util.AttributeSet
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import sk.stu.fei.mobv2022.data.database.model.BarItem
 import sk.stu.fei.mobv2022.data.database.model.FriendItem
 import sk.stu.fei.mobv2022.ui.components.friendListRecyclerView.adapter.FriendsAdapter
-import sk.stu.fei.mobv2022.ui.components.pubsRecyclerView.adapter.BarsAdapter
-import sk.stu.fei.mobv2022.ui.components.pubsRecyclerView.widget.BarsRecyclerView
 
 class FriendsRecyclerView : RecyclerView {
 

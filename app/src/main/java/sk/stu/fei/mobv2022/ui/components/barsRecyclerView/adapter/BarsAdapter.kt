@@ -1,14 +1,12 @@
-package sk.stu.fei.mobv2022.ui.components.pubsRecyclerView.adapter
+package sk.stu.fei.mobv2022.ui.components.barsRecyclerView.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.button.MaterialButton
 import sk.stu.fei.mobv2022.R
 import sk.stu.fei.mobv2022.data.database.model.BarItem
 import sk.stu.fei.mobv2022.services.autoNotify
@@ -30,7 +28,6 @@ class BarsAdapter() : RecyclerView.Adapter<BarsAdapter.ItemViewHolder>() {
         val item : ConstraintLayout  = view.findViewById(R.id.bar_item)
         val nameView: TextView = view.findViewById(R.id.tv_name)
         val typeView: TextView = view.findViewById(R.id.c_type)
-        val signIn: MaterialButton = view.findViewById(R.id.bar_sign_in)
         val userView: TextView = view.findViewById(R.id.tv_count)
     }
 
@@ -45,9 +42,6 @@ class BarsAdapter() : RecyclerView.Adapter<BarsAdapter.ItemViewHolder>() {
         holder.nameView.text = item.name
         holder.typeView.text = item.type
         holder.userView.text = item.users.toString()
-        holder.signIn.setOnClickListener{
-            Navigation.findNavController(it).navigate(BarDetailFragmentDirections.actionToBarSignIn(id))
-        }
         holder.item.setOnClickListener{
             Navigation.findNavController(it).navigate(BarDetailFragmentDirections.actionToBarDetail(id))
         }

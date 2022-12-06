@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 
-class GpsLocation(val lat: Double, val long: Double)
+class GpsLocation(val lat: Double, val lon: Double)
 
 class LocationUtils() {
     companion object {

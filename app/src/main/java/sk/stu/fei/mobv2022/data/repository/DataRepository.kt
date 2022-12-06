@@ -9,6 +9,7 @@ import sk.stu.fei.mobv2022.data.database.LocalCache
 import sk.stu.fei.mobv2022.data.database.model.BarItem
 import sk.stu.fei.mobv2022.data.database.model.FriendItem
 import sk.stu.fei.mobv2022.ui.viewmodels.Sort
+import sk.stu.fei.mobv2022.ui.viewmodels.data.MyLocation
 import sk.stu.fei.mobv2022.ui.viewmodels.data.NearbyBar
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -226,6 +227,60 @@ class DataRepository private constructor(
     fun dbFriends(): LiveData<List<FriendItem>?> {
         return cache.getAllFriends()
     }
+
+    suspend fun apiNearbyBars(
+        lat: Double, lon: Double,
+        onError: (error: String) -> Unit
+    ) : List<NearbyBar> {
+        var nearby = listOf<NearbyBar>()
+        try {
+            val q = "[out:json];node(around:250,$lat,$lon);(node(around:250)[\"amenity\"~\"^pub$|^bar$|^restaurant$|^cafe$|^fast_food$|^stripclub$|^nightclub$\"];);out body;>;out skel;"
+            val resp = service.barNearby(q)
+            if (resp.isSuccessful) {
+                resp.body()?.let { bars ->
+                    nearby = bars.elements.map {
+                        NearbyBar(it.id,it.tags.name, it.tags.amenity,it.lat,it.lon,it.tags).apply {
+                            distance = distanceTo(MyLocation(lat,lon))
+                        }
+                    }.sortedBy { it.distance }
+                } ?: onError("Failed to load bars")
+            } else {
+                onError("Failed to read bars")
+            }
+        } catch (ex: IOException) {
+            ex.printStackTrace()
+            onError("Failed to load bars, check internet connection")
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            onError(ex.toString())
+        }
+        return nearby
+    }
+
+    suspend fun apiBarCheckin(
+        bar: NearbyBar,
+        onError: (error: String) -> Unit,
+        onSuccess: (success: Boolean) -> Unit
+    ) {
+        try {
+            val resp = service.barMessage(BarMessageRequest(bar.id.toString(),
+                bar.name.toString(),bar.type.toString(),bar.lat,bar.lon))
+            if (resp.isSuccessful) {
+                resp.body()?.let { user ->
+                    onSuccess(true)
+                }
+            } else {
+                onError("Failed to login, try again later.")
+            }
+        } catch (ex: IOException) {
+            ex.printStackTrace()
+            onError("Login failed, check internet connection")
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            onError("IDK")
+        }
+    }
+
 
     companion object {
         @Volatile

@@ -1,7 +1,6 @@
 package sk.stu.fei.mobv2022.ui.viewmodels.data
 
 import android.location.Location
-import sk.stu.fei.mobv2022.services.GpsLocation
 
 
 data class MyLocation(
@@ -20,15 +19,15 @@ open class NearbyBar(
     var isPinned: Boolean = false
 ){
 
-    fun distanceTo(toLocation: GpsLocation) {
+    fun distanceTo(toLocation: MyLocation): Double {
         this.distance =  Location("").apply {
             latitude = lat
             longitude = lon
         }.distanceTo(Location("").apply {
             latitude = toLocation.lat
-            longitude = toLocation.long
+            longitude = toLocation.lon
         }).toDouble()
+
+        return distance
     }
-
-
 }
