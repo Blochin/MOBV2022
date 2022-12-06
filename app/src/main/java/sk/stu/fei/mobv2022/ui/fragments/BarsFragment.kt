@@ -6,15 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
-import com.google.android.material.bottomnavigation.BottomNavigationItemView
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import sk.stu.fei.mobv2022.R
 import sk.stu.fei.mobv2022.databinding.FragmentBarsBinding
 import sk.stu.fei.mobv2022.services.Injection
-import sk.stu.fei.mobv2022.services.PreferenceData
 import sk.stu.fei.mobv2022.ui.viewmodels.BarListViewModel
-import sk.stu.fei.mobv2022.ui.viewmodels.LogInViewModel
 import sk.stu.fei.mobv2022.ui.viewmodels.Sort
 
 class BarsFragment : Fragment() {
@@ -41,26 +35,18 @@ class BarsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.setSort(Sort.NAME)
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             model = viewModel
         }.also { bnd ->
             bnd.sortByName.setOnClickListener{
-                binding.apply {
-                    model = viewModel
-                }
                 viewModel.setSort(Sort.NAME)
             }
             bnd.sortByDistance.setOnClickListener{
-                binding.apply {
-                    model = viewModel
-                }
                 viewModel.setSort(Sort.DISTANCE)
             }
             bnd.sortByCount.setOnClickListener{
-                binding.apply {
-                    model = viewModel
-                }
                 viewModel.setSort(Sort.COUNT)
             }
             bnd.swiperefresh.setOnRefreshListener {

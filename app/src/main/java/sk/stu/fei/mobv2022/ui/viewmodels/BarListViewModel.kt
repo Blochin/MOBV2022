@@ -5,6 +5,10 @@ import kotlinx.coroutines.launch
 import sk.stu.fei.mobv2022.data.database.model.BarItem
 import sk.stu.fei.mobv2022.data.repository.DataRepository
 import sk.stu.fei.mobv2022.services.Event
+import sk.stu.fei.mobv2022.ui.viewmodels.data.Bar
+import sk.stu.fei.mobv2022.ui.viewmodels.data.BarDetail
+import sk.stu.fei.mobv2022.ui.viewmodels.data.MyLocation
+import sk.stu.fei.mobv2022.ui.viewmodels.data.NearbyBar
 
 enum class Sort {
     DEFAULT, NAME, COUNT, DISTANCE
@@ -23,13 +27,21 @@ class BarListViewModel(private val repository: DataRepository) : ViewModel() {
 
     val loading = MutableLiveData(false)
 
-    var bars: LiveData<List<BarItem>?> =
-        liveData {
-            loading.postValue(true)
-            repository.apiBarList { _message.postValue(Event(it)) }
-            loading.postValue(false)
-            emitSource(repository.getSortedBars(Sort.DEFAULT, isAsc))
+    private val _bars = MutableLiveData<List<BarItem>?>()
+    val bars: LiveData<List<BarItem>?>
+        get() = _bars
+
+
+    init {
+        viewModelScope.launch {
+            val barsFromDb = repository.getSortedBars(Sort.NAME,isAsc)
+            if (barsFromDb == null || barsFromDb.isEmpty()) {
+                refreshData()
+            } else {
+                _bars.postValue(barsFromDb)
+            }
         }
+    }
 
     fun refreshData(){
         viewModelScope.launch {
@@ -39,18 +51,47 @@ class BarListViewModel(private val repository: DataRepository) : ViewModel() {
         }
     }
 
-    fun setSort(sort: Sort){
-        isAsc = if(sortBy.value == sort){
+    fun setSort(sort: Sort) {
+        isAsc = if (sortBy.value == sort) {
             !isAsc
         } else {
             false
         }
         _sortBy.postValue(sort)
-        bars = liveData {
+        viewModelScope.launch {
             loading.postValue(true)
-            repository.apiBarList { _message.postValue(Event(it)) }
+            var barsFromDb = repository.getSortedBars(sort, isAsc)
+            if (sortBy.value == (Sort.DISTANCE)){
+                var mutablePubs = barsFromDb?.map { it ->
+                    Bar(
+                        it.id,
+                        it.name,
+                        it.type,
+                        it.lat,
+                        it.lon,
+                        it.users,
+                        it.distanceTo(MyLocation(48.1587, 17.0643))
+                    )
+                }?.toMutableList()
+                mutablePubs?.sortBy { it.distance }
+
+                if (!isAsc){
+                    mutablePubs = mutablePubs?.reversed() as MutableList<Bar>?
+                }
+                mutablePubs?.size
+                barsFromDb = mutablePubs?.map {
+                    BarItem(
+                        it.id,
+                        it.name,
+                        it.type,
+                        it.lat,
+                        it.lon,
+                        it.users
+                    )
+                }
+            }
+            _bars.postValue(barsFromDb)
             loading.postValue(false)
-            emitSource(repository.getSortedBars(sort, isAsc))
         }
     }
 

@@ -11,9 +11,9 @@ class LocalCache(private val dao: DbDao) {
     suspend fun insertAllFriend(friends: List<FriendItem>) = dao.insertFriends(friends)
     suspend fun deleteAllFriends(){dao.deleteAllFriends()}
 
-    fun getBars(): LiveData<List<BarItem>?> = dao.getBars()
+    suspend fun getBars(): List<BarItem>? = dao.getBars()
     suspend fun getBarById(id: String): BarItem = dao.getBarById(id)
-    fun getAllOrderByName(orderBy: Boolean): LiveData<List<BarItem>?> = dao.getAllOrderByName(orderBy)
-    fun getAllOrderByUsers(orderBy: Boolean): LiveData<List<BarItem>?> = dao.getAllOrderByUsers(orderBy)
+    suspend fun getAllOrderByName(orderBy: Boolean): List<BarItem>? = dao.getAllOrderByName(orderBy)
+    suspend fun getAllOrderByUsers(orderBy: Boolean): List<BarItem>? = dao.getAllOrderByUsers(orderBy)
     fun getAllFriends(): LiveData<List<FriendItem>?> = dao.getAllFriends()
 }

@@ -117,7 +117,7 @@ class DataRepository private constructor(
         }
     }
 
-    fun getSortedBars(sort: Sort, sortBy: Boolean): LiveData<List<BarItem>?> {
+    suspend fun getSortedBars(sort: Sort, sortBy: Boolean): List<BarItem>? {
         if (sort == Sort.NAME) {
             return getAllOrderByName(sortBy)
         } else if (sort == Sort.COUNT) {
@@ -129,7 +129,7 @@ class DataRepository private constructor(
         }
     }
 
-    fun dbBars(): LiveData<List<BarItem>?> {
+    suspend fun dbBars(): List<BarItem>? {
         return cache.getBars()
     }
 
@@ -137,11 +137,11 @@ class DataRepository private constructor(
         return cache.getBarById(id)
     }
 
-    fun getAllOrderByName(orderBy: Boolean): LiveData<List<BarItem>?> {
+    suspend fun getAllOrderByName(orderBy: Boolean): List<BarItem>? {
         return cache.getAllOrderByName(orderBy)
     }
 
-    fun getAllOrderByUsers(orderBy: Boolean): LiveData<List<BarItem>?> {
+    suspend fun getAllOrderByUsers(orderBy: Boolean): List<BarItem>? {
         return cache.getAllOrderByUsers(orderBy)
     }
 
@@ -228,7 +228,7 @@ class DataRepository private constructor(
         }
     }
 
-    fun dbFriends(): LiveData<List<FriendItem>?> {
+    suspend fun dbFriends(): LiveData<List<FriendItem>?> {
         return cache.getAllFriends()
     }
 

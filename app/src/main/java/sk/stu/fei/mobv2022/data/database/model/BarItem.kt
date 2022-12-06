@@ -1,7 +1,9 @@
 package sk.stu.fei.mobv2022.data.database.model
 
+import android.location.Location
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import sk.stu.fei.mobv2022.ui.viewmodels.data.MyLocation
 
 
 @Entity(tableName = "bars")
@@ -40,5 +42,18 @@ class BarItem(
         result = 31 * result + lon.hashCode()
         result = 31 * result + users
         return result
+    }
+
+    fun distanceTo(myLocation: MyLocation): Double {
+        var distance =  Location("").apply {
+            latitude = lat
+            longitude = lon
+        }.distanceTo(Location("").apply {
+            latitude = myLocation.lat
+            longitude = myLocation.lon
+        }).toDouble()
+
+        return distance
+
     }
 }

@@ -20,16 +20,16 @@ interface DbDao {
     suspend fun deleteAllFriends()
 
     @Query("SELECT * FROM bars order by users DESC, name ASC")
-    fun getBars(): LiveData<List<BarItem>?>
+    suspend fun getBars(): List<BarItem>?
 
     @Query("SELECT * FROM bars WHERE id = :id")
     suspend fun getBarById(id: String): BarItem
 
     @Query("SELECT * FROM bars ORDER BY CASE WHEN :isAsc = 1 THEN users END ASC, CASE WHEN :isAsc = 0 THEN users END DESC")
-    fun getAllOrderByUsers(isAsc: Boolean): LiveData<List<BarItem>?>
+    suspend fun getAllOrderByUsers(isAsc: Boolean): List<BarItem>?
 
     @Query("SELECT * FROM bars ORDER BY CASE WHEN :isAsc = 1 THEN name END ASC, CASE WHEN :isAsc = 0 THEN name END DESC")
-    fun getAllOrderByName(isAsc: Boolean): LiveData<List<BarItem>?>
+    suspend fun getAllOrderByName(isAsc: Boolean): List<BarItem>?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertFriends(friends: List<FriendItem>)
