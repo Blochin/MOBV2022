@@ -22,6 +22,9 @@ interface DbDao {
     @Query("SELECT * FROM bars order by users DESC, name ASC")
     fun getBars(): LiveData<List<BarItem>?>
 
+    @Query("SELECT * FROM bars WHERE id = :id")
+    fun getBarById(id: String): BarItem
+
     @Query("SELECT * FROM bars ORDER BY CASE WHEN :isAsc = 1 THEN users END ASC, CASE WHEN :isAsc = 0 THEN users END DESC")
     fun getAllOrderByUsers(isAsc: Boolean): LiveData<List<BarItem>?>
 

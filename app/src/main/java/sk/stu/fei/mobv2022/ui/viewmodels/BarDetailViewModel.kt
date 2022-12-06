@@ -23,34 +23,29 @@ class BarDetailViewModel(private val repository: DataRepository) : ViewModel()  
         _message.postValue(Event(errorMessage))
     }
 
-    val bars: LiveData<List<BarItem>?> =
-        liveData {
-            loading.postValue(true)
-            emitSource(repository.dbBars())
-            loading.postValue(false)
-        }
-
 
     fun loadBar(id: String) {
         viewModelScope.launch {
-            loading.postValue(true)
             val bar = repository.apiBarDetail(id, onError)
-            val barDb = bars.value?.find { it.id == id }
-            bar?.let {
-                _bar.postValue(BarDetail(
-                    bar.id,
-                    bar.name,
-                    bar.type,
-                    bar.lat,
-                    bar.lon,
-                    bar.tags,
-                    bar.distance
-                ).apply {
-                    barDb?.let {
-                        this.users = it.users
-                    }
-                })
-            }
+            Thread{
+                loading.postValue(true)
+                val barById = repository.dbBarsList(id)
+                bar?.let {
+                    _bar.postValue(BarDetail(
+                        bar.id,
+                        bar.name,
+                        bar.type,
+                        bar.lat,
+                        bar.lon,
+                        bar.tags,
+                        bar.distance
+                    ).apply {
+                        barById.let {
+                            this.users = it.users
+                        }
+                    })
+                }
+            }.start()
         }
     }
 
