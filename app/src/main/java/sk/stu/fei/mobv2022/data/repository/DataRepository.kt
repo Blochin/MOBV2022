@@ -242,7 +242,7 @@ class DataRepository private constructor(
                         NearbyBar(it.id,it.tags.name, it.tags.amenity,it.lat,it.lon,it.tags).apply {
                             distance = distanceTo(MyLocation(lat,lon))
                         }
-                    }.sortedBy { it.distance }
+                    }.filter { it.name?.isNotBlank() ?: false }.sortedBy { it.distance }
                 } ?: onError("Failed to load bars")
             } else {
                 onError("Failed to read bars")
