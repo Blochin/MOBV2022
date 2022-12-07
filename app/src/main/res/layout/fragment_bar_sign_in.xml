@@ -24,18 +24,6 @@
             app:layout_constraintTop_toTopOf="parent"
             />
 
-        <TextView
-            android:id="@+id/back"
-            style="@style/TextAppearance.Material3.BodyMedium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="@string/back"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/header_title"
-            app:layout_constraintBottom_toBottomOf="@id/header_title"
-            />
-
         <androidx.cardview.widget.CardView
             android:id="@+id/detailBox"
             android:padding="8dp"
@@ -65,6 +53,7 @@
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/type"
+                    style="@style/orange_chip"
                     android:text="@{model.myBar.type}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -75,7 +64,10 @@
                     android:id="@+id/animationView2"
                     android:layout_width="75dp"
                     android:layout_height="75dp"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.947"
                     app:layout_constraintStart_toEndOf="@+id/type"
                     app:layout_constraintTop_toBottomOf="@+id/name"
                     app:lottie_autoPlay="false"
@@ -122,13 +114,11 @@
             android:id="@+id/animationView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:visibility="@{model.loading ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintBottom_toBottomOf="@+id/swiperefresh"
-            app:layout_constraintTop_toBottomOf="@+id/back"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
             app:lottie_rawRes="@raw/animation"
-            tools:layout_editor_absoluteX="-16dp" />
+            tools:layout_editor_absoluteX="24dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

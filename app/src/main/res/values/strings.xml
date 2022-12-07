@@ -3,10 +3,10 @@
     <string name="login_title">Login to app</string>
     <string name="sign_up_title">Sign Up</string>
     <string name="login_subtitle">
-        <font color="#00C9B8"><b>Login</b></font> if you already have an account.
+        <font color="#F2771A"><b>Login</b></font> if you already have an account.
     </string>
     <string name="sign_up_subtitle">
-        <font color="#00C9B8"><b>Sign Up</b></font> if you not registered yet.
+        <font color="#F2771A"><b>Sign Up</b></font> if you not registered yet.
     </string>
     <string name="username">Username</string>
     <string name="password">Password</string>
@@ -23,13 +23,14 @@
     <string name="all_bars">All bars</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="sort_name">Sort Name</string>
-    <string name="sort_distance">Sort Distance</string>
-    <string name="sort_count">Sort Count</string>
+    <string name="sort_name">Name</string>
+    <string name="sort_distance">Distance</string>
+    <string name="sort_count">Count</string>
     <string name="sign_in">Sign in</string>
     <string name="show_on_map">Show on map</string>
     <string name="search_for_friends">Search for friends</string>
     <string name="search">Search</string>
     <string name="friend_list">Friend list</string>
     <string name="back">Back</string>
+    <string name="users">Users</string>
 </resources>

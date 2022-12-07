@@ -77,20 +77,14 @@ class BarsFragment : Fragment() {
             bnd.swiperefresh.setOnRefreshListener {
                 viewModel.refreshData()
             }
+            bnd.logout.setOnClickListener {
+                PreferenceData.getInstance().clearData(requireContext())
+                Navigation.findNavController(requireView()).navigate(R.id.action_to_login)
+            }
         }
         viewModel.loading.observe(viewLifecycleOwner) {
             binding.swiperefresh.isRefreshing = it
         }
-
-        /*BottomNavigationView.OnNavigationItemSelectedListener{ item->
-            when(item.itemId){
-                R.id.logout->{
-                    PreferenceData.getInstance().clearData(requireContext())
-                    Navigation.findNavController(requireView()).navigate(R.id.action_to_login)
-                    true
-                } else -> false
-            }
-        }*/
     }
 
     @SuppressLint("MissingPermission")

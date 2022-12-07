@@ -21,10 +21,4 @@
         android:enabled="true"
         android:icon="@drawable/ic_baseline_format_list_bulleted_24"
         android:title="@string/friend_list"/>
-
-    <item
-        android:id="@+id/logInFragment"
-        android:enabled="true"
-        android:icon="@drawable/ic_baseline_logout_24"
-        android:title="@string/logout"/>
 </menu>

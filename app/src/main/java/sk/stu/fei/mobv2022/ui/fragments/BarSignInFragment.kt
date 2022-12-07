@@ -86,9 +86,6 @@ class BarSignInFragment : Fragment() {
             model = viewModel
         }.also { bnd ->
             bnd.animationView2.playAnimation()
-            bnd.back.setOnClickListener {
-                it.findNavController().popBackStack()
-            }
             bnd.swiperefresh.setOnRefreshListener {
                 loadData()
             }
