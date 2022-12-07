@@ -6,8 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import sk.stu.fei.mobv2022.R
 import sk.stu.fei.mobv2022.databinding.FragmentBarsBinding
 import sk.stu.fei.mobv2022.services.Injection
+import sk.stu.fei.mobv2022.services.PreferenceData
 import sk.stu.fei.mobv2022.ui.viewmodels.BarListViewModel
 import sk.stu.fei.mobv2022.ui.viewmodels.Sort
 
@@ -35,6 +38,13 @@ class BarsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val x = PreferenceData.getInstance().getUserItem(requireContext())
+        if ((x?.uid ?: "").isBlank()) {
+            Navigation.findNavController(view).navigate(R.id.action_to_login)
+            return
+        }
+        
         viewModel.setSort(Sort.NAME)
         binding.apply {
             lifecycleOwner = viewLifecycleOwner

@@ -85,6 +85,7 @@ class BarSignInFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
             model = viewModel
         }.also { bnd ->
+            bnd.animationView2.playAnimation()
             bnd.back.setOnClickListener {
                 it.findNavController().popBackStack()
             }
@@ -92,9 +93,10 @@ class BarSignInFragment : Fragment() {
                 loadData()
             }
 
-            bnd.checkme.setOnClickListener {
+            bnd.animationView2.setOnClickListener {
                 if (checkBackgroundPermissions()) {
                     viewModel.checkMe()
+                    bnd.animationView2.playAnimation()
                 } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                         permissionDialog()

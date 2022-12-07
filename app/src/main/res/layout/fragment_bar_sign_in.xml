@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
+        <import type="android.view.View" />
         <variable
             name="model"
             type="sk.stu.fei.mobv2022.ui.viewmodels.BarSignInViewModel" />
@@ -70,16 +71,17 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/name"/>
 
-
-                <com.google.android.material.button.MaterialButton
-                    android:text="I'm here"
-                    android:id="@+id/checkme"
-                    app:layout_constraintTop_toBottomOf="@id/name"
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/animationView2"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:enabled="@{model.myBar!=null}"
-                    />
+                    app:layout_constraintStart_toEndOf="@+id/type"
+                    app:layout_constraintTop_toBottomOf="@+id/name"
+                    app:lottie_autoPlay="false"
+                    app:lottie_loop="true"
+                    app:lottie_rawRes="@raw/animation" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -115,5 +117,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/detailBox" />
 
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animationView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:visibility="@{model.loading ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@+id/swiperefresh"
+            app:layout_constraintTop_toBottomOf="@+id/back"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/animation"
+            tools:layout_editor_absoluteX="-16dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
