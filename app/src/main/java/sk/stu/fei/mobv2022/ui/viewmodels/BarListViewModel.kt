@@ -34,7 +34,7 @@ class BarListViewModel(private val repository: DataRepository) : ViewModel() {
 
     init {
         viewModelScope.launch {
-            val barsFromDb = repository.getSortedBars(Sort.NAME,isAsc)
+            val barsFromDb = repository.getSortedBars(Sort.NAME,isAsc,null)
             if (barsFromDb == null || barsFromDb.isEmpty()) {
                 refreshData()
             } else {
@@ -51,7 +51,7 @@ class BarListViewModel(private val repository: DataRepository) : ViewModel() {
         }
     }
 
-    fun setSort(sort: Sort) {
+    fun setSort(sort: Sort, myLocation: MyLocation?) {
         isAsc = if (sortBy.value == sort) {
             !isAsc
         } else {
@@ -60,36 +60,7 @@ class BarListViewModel(private val repository: DataRepository) : ViewModel() {
         _sortBy.postValue(sort)
         viewModelScope.launch {
             loading.postValue(true)
-            var barsFromDb = repository.getSortedBars(sort, isAsc)
-            if (sortBy.value == (Sort.DISTANCE)){
-                var mutablePubs = barsFromDb?.map { it ->
-                    Bar(
-                        it.id,
-                        it.name,
-                        it.type,
-                        it.lat,
-                        it.lon,
-                        it.users,
-                        it.distanceTo(MyLocation(48.1587, 17.0643))
-                    )
-                }?.toMutableList()
-                mutablePubs?.sortBy { it.distance }
-
-                if (!isAsc){
-                    mutablePubs = mutablePubs?.reversed() as MutableList<Bar>?
-                }
-                mutablePubs?.size
-                barsFromDb = mutablePubs?.map {
-                    BarItem(
-                        it.id,
-                        it.name,
-                        it.type,
-                        it.lat,
-                        it.lon,
-                        it.users
-                    )
-                }
-            }
+            val barsFromDb = repository.getSortedBars(sort, isAsc, myLocation)
             _bars.postValue(barsFromDb)
             loading.postValue(false)
         }

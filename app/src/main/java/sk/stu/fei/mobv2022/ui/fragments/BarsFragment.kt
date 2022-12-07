@@ -1,23 +1,35 @@
 package sk.stu.fei.mobv2022.ui.fragments
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import com.google.android.gms.location.CurrentLocationRequest
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.GeofencingClient
+import com.google.android.gms.location.LocationServices
 import sk.stu.fei.mobv2022.R
 import sk.stu.fei.mobv2022.databinding.FragmentBarsBinding
 import sk.stu.fei.mobv2022.services.Injection
 import sk.stu.fei.mobv2022.services.PreferenceData
 import sk.stu.fei.mobv2022.ui.viewmodels.BarListViewModel
 import sk.stu.fei.mobv2022.ui.viewmodels.Sort
+import sk.stu.fei.mobv2022.ui.viewmodels.data.MyLocation
 
 class BarsFragment : Fragment() {
 
     private lateinit var binding: FragmentBarsBinding
     private lateinit var viewModel: BarListViewModel
+
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var geofencingClient: GeofencingClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +38,9 @@ class BarsFragment : Fragment() {
             this,
             Injection.provideViewModelFactory(requireContext())
         )[BarListViewModel::class.java]
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+        geofencingClient = LocationServices.getGeofencingClient(requireActivity())
     }
 
     override fun onCreateView(
@@ -45,19 +60,19 @@ class BarsFragment : Fragment() {
             return
         }
         
-        viewModel.setSort(Sort.NAME)
+        viewModel.setSort(Sort.NAME,null)
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             model = viewModel
         }.also { bnd ->
             bnd.sortByName.setOnClickListener{
-                viewModel.setSort(Sort.NAME)
+                viewModel.setSort(Sort.NAME,null)
             }
             bnd.sortByDistance.setOnClickListener{
-                viewModel.setSort(Sort.DISTANCE)
+                sortByDistance()
             }
             bnd.sortByCount.setOnClickListener{
-                viewModel.setSort(Sort.COUNT)
+                viewModel.setSort(Sort.COUNT,null)
             }
             bnd.swiperefresh.setOnRefreshListener {
                 viewModel.refreshData()
@@ -76,5 +91,30 @@ class BarsFragment : Fragment() {
                 } else -> false
             }
         }*/
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun sortByDistance() {
+        if (checkPermissions()) {
+            viewModel.loading.postValue(true)
+            fusedLocationClient.getCurrentLocation(
+                CurrentLocationRequest.Builder().setDurationMillis(30000)
+                    .setMaxUpdateAgeMillis(60000).build(), null
+            ).addOnSuccessListener {
+                it?.let {
+                    viewModel.setSort(Sort.DISTANCE ,MyLocation(it.latitude, it.longitude))
+                } ?: viewModel.loading.postValue(false)
+            }
+        }
+    }
+
+    private fun checkPermissions(): Boolean {
+        return ActivityCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
     }
 }

@@ -9,6 +9,7 @@ import sk.stu.fei.mobv2022.data.database.LocalCache
 import sk.stu.fei.mobv2022.data.database.model.BarItem
 import sk.stu.fei.mobv2022.data.database.model.FriendItem
 import sk.stu.fei.mobv2022.ui.viewmodels.Sort
+import sk.stu.fei.mobv2022.ui.viewmodels.data.Bar
 import sk.stu.fei.mobv2022.ui.viewmodels.data.MyLocation
 import sk.stu.fei.mobv2022.ui.viewmodels.data.NearbyBar
 import java.io.IOException
@@ -117,12 +118,14 @@ class DataRepository private constructor(
         }
     }
 
-    suspend fun getSortedBars(sort: Sort, sortBy: Boolean): List<BarItem>? {
+    suspend fun getSortedBars(sort: Sort, sortBy: Boolean, myLocation: MyLocation?): List<BarItem>? {
         if (sort == Sort.NAME) {
             return getAllOrderByName(sortBy)
         } else if (sort == Sort.COUNT) {
             return getAllOrderByUsers(sortBy)
         } else if (sort == Sort.DISTANCE) {
+           return getAllOrderByDistance(sortBy, myLocation)
+        } else if (sort == Sort.DEFAULT) {
             return dbBars()
         } else {
             return dbBars()
@@ -143,6 +146,38 @@ class DataRepository private constructor(
 
     suspend fun getAllOrderByUsers(orderBy: Boolean): List<BarItem>? {
         return cache.getAllOrderByUsers(orderBy)
+    }
+
+    suspend fun getAllOrderByDistance(sortBy: Boolean, myLocation: MyLocation?): List<BarItem>? {
+        var barsFromDb = dbBars()
+        var mutablePubs = barsFromDb?.map { it ->
+            Bar(
+                it.id,
+                it.name,
+                it.type,
+                it.lat,
+                it.lon,
+                it.users,
+                it.distanceTo(myLocation!!)
+            )
+        }?.toMutableList()
+        mutablePubs?.sortBy { it.distance }
+
+        if (!sortBy){
+            mutablePubs = mutablePubs?.reversed() as MutableList<Bar>?
+        }
+        mutablePubs?.size
+        barsFromDb = mutablePubs?.map {
+            BarItem(
+                it.id,
+                it.name,
+                it.type,
+                it.lat,
+                it.lon,
+                it.users
+            )
+        }
+        return barsFromDb
     }
 
     suspend fun apiBarDetail(
