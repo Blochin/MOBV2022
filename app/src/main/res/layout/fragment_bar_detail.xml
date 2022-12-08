@@ -33,6 +33,7 @@
             style="@style/orange_chip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="@{model.loading ? View.INVISIBLE : View.VISIBLE}"
             android:textAlignment="center"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -45,6 +46,7 @@
             style="@style/orange_chip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="@{model.loading ? View.INVISIBLE : View.VISIBLE}"
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
@@ -71,6 +73,7 @@
 
         <TextView
             android:id="@+id/bar_phone"
+            android:autoLink="phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
@@ -80,6 +83,8 @@
 
         <TextView
             android:id="@+id/bar_website"
+            android:autoLink="web"
+            android:textAlignment="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
@@ -91,6 +96,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@+id/map_button"
             app:layout_constraintEnd_toEndOf="parent"
+            android:textAlignment="center"
             showText="@{model.message}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bar_phone" />
@@ -99,11 +105,22 @@
             android:id="@+id/map_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:visibility="@{model.loading ? View.INVISIBLE : View.VISIBLE}"
             android:text="@string/show_on_map"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bar_phone" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animationView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="@{model.loading ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/animation" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

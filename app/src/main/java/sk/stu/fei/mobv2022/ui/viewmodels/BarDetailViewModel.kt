@@ -13,7 +13,7 @@ class BarDetailViewModel(private val repository: DataRepository) : ViewModel()  
     val message: LiveData<Event<String>>
         get() = _message
 
-    val loading = MutableLiveData(false)
+    val loading = MutableLiveData(true)
 
     private val _bar = MutableLiveData<BarDetail>()
     val bar: LiveData<BarDetail> get() = _bar

@@ -54,12 +54,10 @@ class BarDetailFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
             model = viewModel
         }.also { bnd->
-            /*bnd.back.setOnClickListener { it.findNavController().popBackStack() }*/
-
             viewModel.bar.observe(viewLifecycleOwner) { barDetail ->
                 bnd.barName.text = barDetail.name
                 bnd.barType.text = barDetail.type
-                bnd.barUsers.text = barDetail.users.toString()
+                bnd.barUsers.text = "Users: " + barDetail.users.toString()
                 bnd.barLat.text = barDetail.lat.toString()
                 bnd.barLon.text = barDetail.lon.toString()
 

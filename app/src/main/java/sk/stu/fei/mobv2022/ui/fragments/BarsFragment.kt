@@ -2,7 +2,9 @@ package sk.stu.fei.mobv2022.ui.fragments
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.DialogInterface
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,6 +12,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -34,6 +38,9 @@ class BarsFragment : Fragment() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var geofencingClient: GeofencingClient
 
+    private val requestPermission =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) {}
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -54,6 +61,7 @@ class BarsFragment : Fragment() {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -62,7 +70,6 @@ class BarsFragment : Fragment() {
             Navigation.findNavController(view).navigate(R.id.action_to_login)
             return
         }
-        viewModel.setSort(Sort.NAME,null)
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             model = viewModel
@@ -89,6 +96,7 @@ class BarsFragment : Fragment() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     @SuppressLint("MissingPermission")
     private fun sortByDistance() {
         if (checkPermissions()) {
@@ -101,6 +109,8 @@ class BarsFragment : Fragment() {
                     viewModel.setSort(Sort.DISTANCE ,MyLocation(it.latitude, it.longitude))
                 } ?: viewModel.loading.postValue(false)
             }
+        }else {
+            requestPermission.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         }
     }
 

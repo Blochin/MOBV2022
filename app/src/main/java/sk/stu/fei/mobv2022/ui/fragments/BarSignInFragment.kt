@@ -55,12 +55,8 @@ class BarSignInFragment : Fragment() {
     private val requestPermission =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
 
-            if (isGranted) { // Do something if permission granted
-                Log.d("LOG_TAG", "permission granted by the user")
+            if (isGranted) {
                 loadData()
-
-            } else { // Do something as the permission is not granted
-                Log.d("LOG_TAG", "permission denied by the user")
             }
         }
 
@@ -149,8 +145,6 @@ class BarSignInFragment : Fragment() {
 
         if (checkPermissions()) {
             loadData()
-        } else {
-            //Navigation.findNavController(requireView()).navigate(R.id.action_to_all_bars)
         }
 
         viewModel.message.observe(viewLifecycleOwner) {
