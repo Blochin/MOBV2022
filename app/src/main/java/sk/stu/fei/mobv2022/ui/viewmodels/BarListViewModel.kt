@@ -44,6 +44,8 @@ class BarListViewModel(private val repository: DataRepository) : ViewModel() {
         viewModelScope.launch {
             loading.postValue(true)
             repository.apiBarList { _message.postValue(Event(it)) }
+            val barsFromDb = repository.getSortedBars(Sort.NAME,isAsc,null)
+            _bars.postValue(barsFromDb)
             loading.postValue(false)
         }
     }

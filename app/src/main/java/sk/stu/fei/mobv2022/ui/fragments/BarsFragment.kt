@@ -70,14 +70,14 @@ class BarsFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
             model = viewModel
         }.also { bnd ->
-            bnd.sortByName.setOnClickListener{
-                viewModel.setSort(Sort.NAME,null)
+            bnd.sortByName.setOnClickListener {
+                viewModel.setSort(Sort.NAME, null)
             }
-            bnd.sortByDistance.setOnClickListener{
+            bnd.sortByDistance.setOnClickListener {
                 sortByDistance()
             }
-            bnd.sortByCount.setOnClickListener{
-                viewModel.setSort(Sort.COUNT,null)
+            bnd.sortByCount.setOnClickListener {
+                viewModel.setSort(Sort.COUNT, null)
             }
             bnd.swiperefresh.setOnRefreshListener {
                 viewModel.refreshData()
@@ -102,10 +102,10 @@ class BarsFragment : Fragment() {
                     .setMaxUpdateAgeMillis(60000).build(), null
             ).addOnSuccessListener {
                 it?.let {
-                    viewModel.setSort(Sort.DISTANCE ,MyLocation(it.latitude, it.longitude))
+                    viewModel.setSort(Sort.DISTANCE, MyLocation(it.latitude, it.longitude))
                 } ?: viewModel.loading.postValue(false)
             }
-        }else {
+        } else {
             requestPermission.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         }
     }

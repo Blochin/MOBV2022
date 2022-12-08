@@ -12,11 +12,9 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import sk.stu.fei.mobv2022.R
 import sk.stu.fei.mobv2022.databinding.FragmentBarDetailBinding
-import sk.stu.fei.mobv2022.databinding.FragmentBarsBinding
 import sk.stu.fei.mobv2022.services.Injection
 import sk.stu.fei.mobv2022.services.PreferenceData
 import sk.stu.fei.mobv2022.ui.viewmodels.BarDetailViewModel
-import sk.stu.fei.mobv2022.ui.viewmodels.BarListViewModel
 
 class BarDetailFragment : Fragment() {
 
@@ -33,6 +31,7 @@ class BarDetailFragment : Fragment() {
         )[BarDetailViewModel::class.java]
 
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -53,7 +52,7 @@ class BarDetailFragment : Fragment() {
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             model = viewModel
-        }.also { bnd->
+        }.also { bnd ->
             viewModel.bar.observe(viewLifecycleOwner) { barDetail ->
                 bnd.barName.text = barDetail.name
                 bnd.barType.text = barDetail.type
