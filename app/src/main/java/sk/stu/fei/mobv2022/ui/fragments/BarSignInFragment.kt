@@ -8,6 +8,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
@@ -50,8 +52,31 @@ class BarSignInFragment : Fragment() {
         }
     }
 
+    private val requestPermission =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+
+            if (isGranted) { // Do something if permission granted
+                Log.d("LOG_TAG", "permission granted by the user")
+                loadData()
+
+            } else { // Do something as the permission is not granted
+                Log.d("LOG_TAG", "permission denied by the user")
+            }
+        }
+
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requestPermission.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+            requestPermission.launch(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+
+        }
 
         viewModel = ViewModelProvider(
             this,
@@ -125,7 +150,7 @@ class BarSignInFragment : Fragment() {
         if (checkPermissions()) {
             loadData()
         } else {
-            Navigation.findNavController(requireView()).navigate(R.id.action_to_all_bars)
+            //Navigation.findNavController(requireView()).navigate(R.id.action_to_all_bars)
         }
 
         viewModel.message.observe(viewLifecycleOwner) {

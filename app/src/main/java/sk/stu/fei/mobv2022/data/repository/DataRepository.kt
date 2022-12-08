@@ -263,9 +263,10 @@ class DataRepository private constructor(
         }
     }
 
-    suspend fun deleteFriend(name: String, onError: (error: String) -> Unit){
+    suspend fun deleteFriend(name: String, onError: (error: String) -> Unit, onResolved: (error: String) -> Unit){
         try{
             service.deleteFriend(FriendRequest(name))
+            onResolved("Friend with name $name deleted succesfully ")
         }catch (ex: Exception) {
             ex.printStackTrace()
             onError("Failed to delete friend, error.")

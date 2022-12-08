@@ -34,4 +34,6 @@
     <string name="back">Back</string>
     <string name="users">Users</string>
     <string name="delete">Delete</string>
+    <string name="friends">Friends</string>
+    <string name="other_friends">Other Friends</string>
 </resources>

@@ -48,7 +48,7 @@ class FriendViewModel(private val repository: DataRepository) : ViewModel() {
 
     fun removeFriend(friendName: String){
         viewModelScope.launch {
-            repository.deleteFriend(friendName ,onError)
+            repository.deleteFriend(friendName ,onError, onResolve)
         }
         refreshData()
     }
