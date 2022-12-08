@@ -2,7 +2,6 @@ package sk.stu.fei.mobv2022.ui.viewmodels
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
-import sk.stu.fei.mobv2022.data.database.model.BarItem
 import sk.stu.fei.mobv2022.data.repository.DataRepository
 import sk.stu.fei.mobv2022.services.Event
 import sk.stu.fei.mobv2022.ui.viewmodels.data.BarDetail

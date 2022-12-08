@@ -32,9 +32,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/sign_in"
-                    app:layout_constraintBottom_toTopOf="@+id/animationView2"
-                    app:layout_constraintEnd_toEndOf="@+id/animationView2"
-                    app:layout_constraintStart_toStartOf="@+id/animationView2"
+                    app:layout_constraintBottom_toTopOf="@+id/sign_in_animation"
+                    app:layout_constraintEnd_toEndOf="@+id/sign_in_animation"
+                    app:layout_constraintStart_toStartOf="@+id/sign_in_animation"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
@@ -58,7 +58,7 @@
                     app:layout_constraintTop_toBottomOf="@id/name" />
 
                 <com.airbnb.lottie.LottieAnimationView
-                    android:id="@+id/animationView2"
+                    android:id="@+id/sign_in_animation"
                     android:layout_width="75dp"
                     android:layout_height="75dp"
                     app:layout_constraintBottom_toBottomOf="parent"

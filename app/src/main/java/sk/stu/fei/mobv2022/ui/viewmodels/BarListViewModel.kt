@@ -5,10 +5,7 @@ import kotlinx.coroutines.launch
 import sk.stu.fei.mobv2022.data.database.model.BarItem
 import sk.stu.fei.mobv2022.data.repository.DataRepository
 import sk.stu.fei.mobv2022.services.Event
-import sk.stu.fei.mobv2022.ui.viewmodels.data.Bar
-import sk.stu.fei.mobv2022.ui.viewmodels.data.BarDetail
 import sk.stu.fei.mobv2022.ui.viewmodels.data.MyLocation
-import sk.stu.fei.mobv2022.ui.viewmodels.data.NearbyBar
 
 enum class Sort {
     DEFAULT, NAME, COUNT, DISTANCE

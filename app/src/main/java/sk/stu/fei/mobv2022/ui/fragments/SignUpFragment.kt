@@ -68,10 +68,14 @@ class SignUpFragment : Fragment() {
                 val password = binding.signupPassword.text.toString()
                 val passwordHash = PasswordHash.getPassword(password)
 
-                viewModel.signup(
-                    binding.signupName.text.toString(),
-                    passwordHash
-                )
+                if (passwordHash != null) {
+                    viewModel.signup(
+                        binding.signupName.text.toString(),
+                        passwordHash
+                    )
+                }else {
+                    viewModel.show("Can't create hash")
+                }
 
             } else {
                 binding.signupValidationPassword.visibility = View.VISIBLE

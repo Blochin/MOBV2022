@@ -9,15 +9,11 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import sk.stu.fei.mobv2022.R
-import sk.stu.fei.mobv2022.databinding.FragmentAddFriendBinding
-import sk.stu.fei.mobv2022.databinding.FragmentBarSignInBinding
 import sk.stu.fei.mobv2022.databinding.FragmentFriendListBinding
 import sk.stu.fei.mobv2022.services.Injection
 import sk.stu.fei.mobv2022.services.PreferenceData
 import sk.stu.fei.mobv2022.ui.components.friendListRecyclerView.DeleteFriendAction
-import sk.stu.fei.mobv2022.ui.components.nearbyBarsRecyclerView.NearbyBarsEvents
 import sk.stu.fei.mobv2022.ui.viewmodels.FriendViewModel
-import sk.stu.fei.mobv2022.ui.viewmodels.data.NearbyBar
 
 class FriendListFragment : Fragment() {
 

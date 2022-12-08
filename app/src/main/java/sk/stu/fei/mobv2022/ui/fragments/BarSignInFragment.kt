@@ -8,7 +8,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +19,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import com.google.android.gms.location.*
 import sk.stu.fei.mobv2022.GeofenceBroadcastReceiver
 import sk.stu.fei.mobv2022.databinding.FragmentBarSignInBinding
@@ -106,15 +104,15 @@ class BarSignInFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
             model = viewModel
         }.also { bnd ->
-            bnd.animationView2.playAnimation()
+            bnd.signInAnimation.playAnimation()
             bnd.swiperefresh.setOnRefreshListener {
                 loadData()
             }
 
-            bnd.animationView2.setOnClickListener {
+            bnd.signInAnimation.setOnClickListener {
                 if (checkBackgroundPermissions()) {
                     viewModel.checkMe()
-                    bnd.animationView2.playAnimation()
+                    bnd.signInAnimation.playAnimation()
                 } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                         permissionDialog()
@@ -197,7 +195,7 @@ class BarSignInFragment : Fragment() {
                 //Navigation.findNavController(requireView()).navigate(R.id.action_to_all_bars)
             }
             addOnFailureListener {
-                viewModel.show("Geofence failed to create.") //permission is not granted for All times.
+                viewModel.show("Geofence failed to create.")
                 it.printStackTrace()
             }
         }

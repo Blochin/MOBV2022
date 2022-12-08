@@ -8,10 +8,10 @@ class PasswordHash {
 
     companion object {
 
-        fun getPassword(passwordToHash: String): String {
+        fun getPassword(passwordToHash: String): String? {
 
-            val salt: String = "ypiOk!1sDxm"
-            var generatedPassword: String
+            val salt = "ypiOk!1sDxm"
+            var generatedPassword: String? = null
             try {
                 val md: MessageDigest = MessageDigest.getInstance("SHA-512")
                 md.update(salt.toByteArray())
@@ -26,7 +26,6 @@ class PasswordHash {
                 generatedPassword = sb.toString()
             } catch (e: NoSuchAlgorithmException) {
                 e.printStackTrace()
-                generatedPassword = passwordToHash
             }
             return generatedPassword
         }

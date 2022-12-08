@@ -64,7 +64,11 @@ class LogInFragment : Fragment() {
                 binding.loginValidationPassword.visibility = View.INVISIBLE
                 val password = binding.loginPassword.text.toString()
                 val passwordHash = PasswordHash.getPassword(password)
-                viewModel.login(binding.loginName.text.toString(), passwordHash)
+                if (passwordHash != null) {
+                    viewModel.login(binding.loginName.text.toString(), passwordHash)
+                }else{
+                    viewModel.show("Can't create hash")
+                }
             } else {
                 binding.loginValidationPassword.visibility = View.VISIBLE
             }
