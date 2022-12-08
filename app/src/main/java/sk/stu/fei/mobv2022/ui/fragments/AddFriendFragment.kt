@@ -48,7 +48,7 @@ class AddFriendFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
             model = viewModel
         }.also { bnd ->
-            bnd.addFriendButton.setOnClickListener{
+            bnd.addFriendButton.setOnClickListener {
                 viewModel.addFriend(bnd.friendName.text.toString())
             }
         }

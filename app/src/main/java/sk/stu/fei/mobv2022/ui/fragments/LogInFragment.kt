@@ -11,6 +11,7 @@ import androidx.navigation.findNavController
 import sk.stu.fei.mobv2022.R
 import sk.stu.fei.mobv2022.databinding.FragmentLogInBinding
 import sk.stu.fei.mobv2022.services.Injection
+import sk.stu.fei.mobv2022.services.PasswordHash
 import sk.stu.fei.mobv2022.services.PreferenceData
 import sk.stu.fei.mobv2022.services.Validation
 import sk.stu.fei.mobv2022.ui.viewmodels.LogInViewModel
@@ -58,11 +59,12 @@ class LogInFragment : Fragment() {
                 binding.loginValidationName.visibility = View.INVISIBLE;
             } else {
                 binding.loginValidationName.visibility = View.VISIBLE;
-                //viewModel.show("fields must not be empty") //TODO vytvorit pre kazdy validacny field binding
             }
             if(Validation.validPassword(binding.loginPassword.text.toString(), binding.loginPassword.text.toString())){
                 binding.loginValidationPassword.visibility = View.INVISIBLE
-                viewModel.login(binding.loginName.text.toString(), binding.loginPassword.text.toString())
+                val password = binding.loginPassword.text.toString()
+                val passwordHash = PasswordHash.getPassword(password)
+                viewModel.login(binding.loginName.text.toString(), passwordHash)
             } else {
                 binding.loginValidationPassword.visibility = View.VISIBLE
             }

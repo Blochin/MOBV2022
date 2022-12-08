@@ -11,6 +11,7 @@ import androidx.navigation.findNavController
 import sk.stu.fei.mobv2022.R
 import sk.stu.fei.mobv2022.databinding.FragmentSignUpBinding
 import sk.stu.fei.mobv2022.services.Injection
+import sk.stu.fei.mobv2022.services.PasswordHash
 import sk.stu.fei.mobv2022.services.PreferenceData
 import sk.stu.fei.mobv2022.services.Validation
 import sk.stu.fei.mobv2022.ui.viewmodels.SignUpViewModel
@@ -64,9 +65,12 @@ class SignUpFragment : Fragment() {
                 binding.signupValidationPassword.visibility = View.INVISIBLE
                 binding.signupValidationPassword2.visibility = View.INVISIBLE
 
+                val password = binding.signupPassword.text.toString()
+                val passwordHash = PasswordHash.getPassword(password)
+
                 viewModel.signup(
                     binding.signupName.text.toString(),
-                    binding.signupPassword.text.toString()
+                    passwordHash
                 )
 
             } else {
