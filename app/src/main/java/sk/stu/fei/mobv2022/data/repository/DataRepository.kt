@@ -220,7 +220,7 @@ class DataRepository private constructor(
     ) {
         withContext(Dispatchers.IO) {
             try {
-                val resp = service.addFriend(AddFriendRequest(name))
+                val resp = service.addFriend(FriendRequest(name))
                 if (resp.isSuccessful) {
                     onResolved("Friend $name successfully added.")
                 } else {
@@ -260,6 +260,15 @@ class DataRepository private constructor(
         } catch (ex: Exception) {
             ex.printStackTrace()
             onError("Failed to load friends, error.")
+        }
+    }
+
+    suspend fun deleteFriend(name: String, onError: (error: String) -> Unit){
+        try{
+            service.deleteFriend(FriendRequest(name))
+        }catch (ex: Exception) {
+            ex.printStackTrace()
+            onError("Failed to delete friend, error.")
         }
     }
 

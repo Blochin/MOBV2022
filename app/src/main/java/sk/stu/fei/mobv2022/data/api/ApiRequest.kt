@@ -22,6 +22,6 @@ data class BarMessageRequest(
     val lon: Double
 )
 
-data class AddFriendRequest(
+data class FriendRequest(
     val contact: String
 )

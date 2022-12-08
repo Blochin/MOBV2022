@@ -23,14 +23,27 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <sk.stu.fei.mobv2022.ui.components.friendListRecyclerView.widget.FriendsRecyclerView
-            android:id="@+id/friendsRecyclerView"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swiperefresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:friendItems="@{model.friends}"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <sk.stu.fei.mobv2022.ui.components.friendListRecyclerView.widget.FriendsRecyclerView
+                android:id="@+id/friendsRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:friendItems="@{model.friends}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

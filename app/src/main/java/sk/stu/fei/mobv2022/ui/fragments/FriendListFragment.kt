@@ -1,6 +1,7 @@
 package sk.stu.fei.mobv2022.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +14,10 @@ import sk.stu.fei.mobv2022.databinding.FragmentBarSignInBinding
 import sk.stu.fei.mobv2022.databinding.FragmentFriendListBinding
 import sk.stu.fei.mobv2022.services.Injection
 import sk.stu.fei.mobv2022.services.PreferenceData
+import sk.stu.fei.mobv2022.ui.components.friendListRecyclerView.DeleteFriendAction
+import sk.stu.fei.mobv2022.ui.components.nearbyBarsRecyclerView.NearbyBarsEvents
 import sk.stu.fei.mobv2022.ui.viewmodels.FriendViewModel
+import sk.stu.fei.mobv2022.ui.viewmodels.data.NearbyBar
 
 class FriendListFragment : Fragment() {
 
@@ -50,6 +54,22 @@ class FriendListFragment : Fragment() {
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             model = viewModel
+        }.also { bnd->
+            bnd.swiperefresh.setOnRefreshListener {
+                viewModel.refreshData()
+            }
+
+            bnd.friendsRecyclerView.events = object : DeleteFriendAction{
+                override fun onDeleteClick(name: String) {
+                    Log.e("name",name)
+                    viewModel.removeFriend(name)
+                }
+
+            }
+        }
+
+        viewModel.loading.observe(viewLifecycleOwner) {
+            binding.swiperefresh.isRefreshing = it
         }
     }
 }

@@ -32,10 +32,25 @@ class FriendViewModel(private val repository: DataRepository) : ViewModel() {
         _message.postValue(Event(resolveMessage))
     }
 
+    fun refreshData(){
+        viewModelScope.launch {
+            loading.postValue(true)
+            repository.getFriends { _message.postValue(Event(it)) }
+            loading.postValue(false)
+        }
+    }
+
     fun addFriend(friendsName: String){
         viewModelScope.launch {
             repository.addFriend(friendsName,onResolve ,onError)
         }
+    }
+
+    fun removeFriend(friendName: String){
+        viewModelScope.launch {
+            repository.deleteFriend(friendName ,onError)
+        }
+        refreshData()
     }
 
     fun setMessage(message: String) {
